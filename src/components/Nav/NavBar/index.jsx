@@ -9,7 +9,7 @@ export default function NavBar() {
       <ul className={styles.containerList}>
         <li className={styles.containerListItem}>
           <Link to="/">
-            <img src={logo} alt="SportSeeLogo" />
+            <img src={logo} alt="SportSeeLogo" className={styles.logo} />
           </Link>
         </li>
         <li className={styles.containerListItem}>
