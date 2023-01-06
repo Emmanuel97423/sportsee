@@ -1,0 +1,30 @@
+.container {
+    width:100px;
+    height: 100%;
+    background-color: #000;
+    float: left;
+    color: #fff;
+    padding: 0.5em 0.5em 0.5em;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.iconsList{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+}
+.iconsList img {
+    cursor: pointer;
+}
+.copyright {
+        transform: rotate(-90deg);
+        white-space: nowrap;
+        font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 24px;
+}

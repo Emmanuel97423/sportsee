@@ -84,7 +84,8 @@ video {
   font-family: 'Roboto', sans-serif;
 }
 
-body {
+html, body {
+  height: 100%;
   line-height: 1;
 }
 
@@ -171,4 +172,8 @@ hr {
 input,
 select {
   vertical-align: middle;
+}
+
+#root{
+  height: 100%;
 }
