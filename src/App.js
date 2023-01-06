@@ -1,17 +1,22 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-// import logo from './logo.svg';
-import './App.css';
-import BarChartComponent from './components/BarChartComponent';
-import data from './__mock__/data.json';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-const userActivity = data.usersActivity;
+import DefaultLayout from './layout/LayoutDefault';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
+import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Dashboard</h1>
-      <BarChartComponent userActivity={userActivity} />
-    </div>
+    <Router>
+      <DefaultLayout>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/Dashboard/:id" element={<Dashboard />} />
+        </Routes>
+      </DefaultLayout>
+    </Router>
   );
 }
 
