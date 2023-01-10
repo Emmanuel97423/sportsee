@@ -47,7 +47,6 @@ export default function RadarChartComponent({ performances, userId }) {
       A: d.value,
     };
   });
-  console.log('formatData:', formatData);
 
   return (
     // <RadarChart data={performances.dataItem[0]}>
