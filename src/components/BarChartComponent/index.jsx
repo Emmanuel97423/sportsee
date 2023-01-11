@@ -69,42 +69,6 @@ function renderCustomizedLegend(props) {
   );
 }
 export default function BarChartComponent({ userActivity }) {
-  // return (
-  //   <div>
-  //     <ResponsiveContainer width="100%" height={320}>
-  //       <BarChart
-  //         width={700}
-  //         height={400}
-  //         data={userActivity.sessions}
-  //         margin={{
-  //           top: 5,
-  //           right: 30,
-  //           left: 20,
-  //           bottom: 5,
-  //         }}
-  //       >
-  //         <CartesianGrid strokeDasharray="3 3" />
-  //         <XAxis dataKey="day" />
-  //         <YAxis />
-  //         <Tooltip />
-  //         <Legend
-  //           content={renderCustomizedLegend}
-  //           verticalAlign="top"
-  //           align="right"
-  //         />
-
-  //         <Bar dataKey="kilogram" fill="#282D30" minPointSize={5} barSize={7} />
-
-  //         <Bar
-  //           dataKey="calories"
-  //           fill="#E60000"
-  //           barSize={7}
-  //           minPointSize={10}
-  //         />
-  //       </BarChart>
-  //     </ResponsiveContainer>
-  //   </div>
-  // );
   return (
     <>
       {userActivity.map((element, index) => {
