@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import BarChartComponent from '../components/BarChartComponent';
 import RadarChartComponent from '../components/RadarChartComponent';
+import LineChartComponent from '../components/LineChartComponent';
 import mockDataJson from '../__mock__/data.json';
 
 function filterUsers(userDataFiltered, id) {
@@ -14,13 +15,16 @@ export default function Dashboard() {
   const parseIntId = parseInt(id, 10);
 
   const [data, setData] = useState(mockDataJson);
+  const [firstNameState, setFirstNameState] = useState('FirstName');
+
   const [activityState, setActivityState] = useState(
     mockDataJson.usersActivity,
   );
   const [performancesState, setPerformancesState] = useState(
     mockDataJson.performances,
   );
-  const [firstNameState, setFirstNameState] = useState('FirstName');
+
+  const [averageState, setAverageState] = useState(mockDataJson.average);
 
   useEffect(() => {
     const userData = data.users;
@@ -39,6 +43,7 @@ export default function Dashboard() {
         performances={performancesState}
         userId={parseIntId}
       />
+      <LineChartComponent average={averageState} userId={parseIntId} />
     </div>
   );
 }
