@@ -1,9 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 import {
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
-  PolarRadiusAxis,
+  // PolarRadiusAxis,
   Radar,
 } from 'recharts';
 import Performance from '../../models/performances/Performance';
@@ -37,20 +38,23 @@ export default function RadarChartComponent({ performances, userId }) {
     };
   });
 
+  const Container = styled.div`
+    background: #282d30;
+    height: 263px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  `;
+
   return (
-    <div>
+    <Container>
       <RadarChart outerRadius={90} width={730} height={250} data={formatData}>
-        <PolarGrid />
+        <PolarGrid radialLines={false} />
         <PolarAngleAxis dataKey="subject" />
-        <PolarRadiusAxis angle={30} domain={[0, 240]} />
-        <Radar
-          name={userId}
-          dataKey="A"
-          stroke="#8884d8"
-          fill="#8884d8"
-          fillOpacity={0.6}
-        />
+        {/* <PolarRadiusAxis angle={30} domain={[0, 240]} /> */}
+        <Radar name={userId} dataKey="A" fill="#FF0101" fillOpacity={0.7} />
       </RadarChart>
-    </div>
+    </Container>
   );
 }
