@@ -1,6 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import DataItem from './DataItem';
 
+import KindTranslate from './KindTranslate';
+
+const translateKind = new KindTranslate();
+translateKind.setLanguage('fr');
+
 /**
  * Represents a user's performance data
  */
@@ -14,7 +19,7 @@ export default class Performances {
    */
   constructor(data) {
     this._userId = data.userId;
-    this._kind = data.kind;
+    this._kind = translateKind.kind;
     this._dataItem = data.data.map((item) => new DataItem(item));
   }
 

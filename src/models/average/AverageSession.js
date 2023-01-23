@@ -3,14 +3,14 @@
 /**
  * class AverageSession - data modeling
  */
-import DayConverter from './AverageDayConvert';
+// import DayConverter from './AverageDayConvert';
 
-const converter = new DayConverter();
+// const converter = new DayConverter();
 // Output: "Wednesday"
 
 export default class AverageSession {
   constructor(data) {
-    this._day = converter.getDayOfWeek(data.day);
+    this._day = data.day;
     this._sessionLength = data.sessionLength;
   }
 

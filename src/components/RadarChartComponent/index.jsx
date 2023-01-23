@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import styled from 'styled-components';
 import {
@@ -33,7 +34,7 @@ export default function RadarChartComponent({ performances, userId }) {
   const performance = new Performance(filteredPerformance[0]);
   const formatData = performance.dataItem.map((d) => {
     return {
-      subject: performance.kind[d.kind],
+      subject: performance._kind[d.kind],
       A: d.value,
     };
   });
@@ -45,6 +46,7 @@ export default function RadarChartComponent({ performances, userId }) {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    border-radius: 5px;
   `;
 
   return (

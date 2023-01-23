@@ -72,6 +72,7 @@ export default function BarChartComponent({ userActivity }) {
   return (
     <>
       {userActivity.map((element, index) => {
+        console.log('element:', element);
         return (
           <Fragment key={index}>
             <ResponsiveContainer width="100%" height={320}>
