@@ -8,7 +8,7 @@ import {
   Legend,
   Line,
   Dot,
-  Area,
+  Area
 } from 'recharts';
 import Average from '../../models/average/Average';
 
@@ -98,6 +98,7 @@ export default function LineChartComponent({ average, userId }) {
 
   // Styled-component for container
   const Container = styled.div`
+    width: 30%;
     background-color: red;
     border-radius: 5px;
   `;
@@ -120,7 +121,7 @@ export default function LineChartComponent({ average, userId }) {
           tick={{
             fill: '#fff',
             fontFamily: 'Roboto',
-            fontSize: 14,
+            fontSize: 14
           }}
           tickFormatter={numberX}
           style={{ transform: 'scaleX(0.9)', transformOrigin: 'bottom' }}
@@ -141,7 +142,7 @@ export default function LineChartComponent({ average, userId }) {
           wrapperStyle={{
             width: '190px',
             height: 'auto',
-            padding: '29px 34px',
+            padding: '29px 34px'
           }}
           content={renderLegend}
         />

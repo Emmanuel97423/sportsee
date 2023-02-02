@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
+  ResponsiveContainer
 } from 'recharts';
 
 function legendRenderColor(value) {
@@ -28,7 +28,7 @@ function legendRenderColor(value) {
             fontWeight: '500',
             lineHeight: '24px',
             letterSpacing: '0px',
-            textAlign: 'left',
+            textAlign: 'left'
           }}
         >
           Calories brûlées (kCal)
@@ -42,7 +42,7 @@ function legendRenderColor(value) {
             fontWeight: '500',
             lineHeight: '24px',
             letterSpacing: '0px',
-            textAlign: 'left',
+            textAlign: 'left'
           }}
         >
           Poids (kg)
@@ -72,7 +72,6 @@ export default function BarChartComponent({ userActivity }) {
   return (
     <>
       {userActivity.map((element, index) => {
-        console.log('element:', element);
         return (
           <Fragment key={index}>
             <ResponsiveContainer width="100%" height={320}>
@@ -84,7 +83,7 @@ export default function BarChartComponent({ userActivity }) {
                   top: 5,
                   right: 30,
                   left: 20,
-                  bottom: 5,
+                  bottom: 5
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />

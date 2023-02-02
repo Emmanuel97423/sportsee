@@ -11,7 +11,7 @@ export default class KindTranslate {
       3: 'endurance',
       4: 'strength',
       5: 'speed',
-      6: 'intensity',
+      6: 'intensity'
     };
   }
 
@@ -37,7 +37,7 @@ export default class KindTranslate {
           3: 'Endurance',
           4: 'Force',
           5: 'Vitesse',
-          6: 'Intensité',
+          6: 'Intensité'
         };
         break;
       case 'es':
@@ -47,7 +47,7 @@ export default class KindTranslate {
           3: 'resistencia',
           4: 'fuerza',
           5: 'velocidad',
-          6: 'intensidad',
+          6: 'intensidad'
         };
         break;
       default:

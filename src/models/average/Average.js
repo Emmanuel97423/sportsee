@@ -5,7 +5,7 @@ export default class Average {
   constructor(data) {
     this._userId = data.userId;
     this._sessions = data.sessions.map(
-      (session) => new AverageSession(session),
+      (session) => new AverageSession(session)
     );
   }
 

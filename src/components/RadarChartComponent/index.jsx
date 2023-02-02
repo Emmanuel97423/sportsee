@@ -6,7 +6,7 @@ import {
   PolarGrid,
   PolarAngleAxis,
   // PolarRadiusAxis,
-  Radar,
+  Radar
 } from 'recharts';
 import Performance from '../../models/performances/Performance';
 
@@ -18,7 +18,7 @@ import Performance from '../../models/performances/Performance';
  */
 function filterUserPerformances(userDataPerformances, id) {
   return userDataPerformances.filter(
-    (performance) => performance.userId === id,
+    (performance) => performance.userId === id
   );
 }
 
@@ -35,23 +35,29 @@ export default function RadarChartComponent({ performances, userId }) {
   const formatData = performance.dataItem.map((d) => {
     return {
       subject: performance._kind[d.kind],
-      A: d.value,
+      A: d.value
     };
   });
 
   const Container = styled.div`
     background: #282d30;
     height: 263px;
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 5px; */
   `;
 
   return (
     <Container>
-      <RadarChart outerRadius={90} width={730} height={250} data={formatData}>
+      <RadarChart
+        outerRadius={90}
+        width={730}
+        height={250}
+        data={formatData}
+        background
+      >
         <PolarGrid radialLines={false} />
         <PolarAngleAxis dataKey="subject" />
         {/* <PolarRadiusAxis angle={30} domain={[0, 240]} /> */}
