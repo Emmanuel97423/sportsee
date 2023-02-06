@@ -4,20 +4,20 @@ import styles from './styles.module.css';
 const icons = [
   {
     id: 1,
-    url: '/img/icons/icon_01.png',
+    url: '/img/icons/icon_01.png'
   },
   {
     id: 2,
-    url: '/img/icons/icon_02.png',
+    url: '/img/icons/icon_02.png'
   },
   {
     id: 3,
-    url: '/img/icons/icon_03.png',
+    url: '/img/icons/icon_03.png'
   },
   {
     id: 4,
-    url: '/img/icons/icon_04.png',
-  },
+    url: '/img/icons/icon_04.png'
+  }
 ];
 
 export default function SideBar() {

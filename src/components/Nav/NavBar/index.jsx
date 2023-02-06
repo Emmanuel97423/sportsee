@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../../SportSeeLogo.png';
 import styles from './styles.module.css';
+// import SideBar from '../SideBar';
 
 export default function NavBar() {
   return (
@@ -19,6 +20,7 @@ export default function NavBar() {
         <li className={styles.containerListItem}>Règlage</li>
         <li className={styles.containerListItem}>Communauté</li>
       </ul>
+      {/* <SideBar /> */}
     </div>
   );
 }

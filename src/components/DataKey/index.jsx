@@ -1,8 +1,15 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
 
 export default function DataKey(props) {
+  const calories = props.dataKey.calorieCount;
+  const carbohydrateCount = props.dataKey.carbohydrateCount;
+  const lipidCount = props.dataKey.lipidCount;
+  const proteinCount = props.dataKey.proteinCount;
+
   const Container = styled.div`
     height: 125px;
     background-color: #fbfbfb;
@@ -36,28 +43,28 @@ export default function DataKey(props) {
       <Container>
         <Icon src="/img/icons/calories-icon.png" alt="icon" />
         <div>
-          <Text>155g</Text>
+          <Text>{calories}kCal</Text>
           <Span>Calories</Span>
         </div>
       </Container>
       <Container>
         <Icon src="/img/icons/icon_protein.png" alt="icon" />
         <div>
-          <Text>155g</Text>
+          <Text>{carbohydrateCount}g</Text>
           <Span>Proteines</Span>
         </div>
       </Container>
       <Container>
         <Icon src="/img/icons/carbs-icon.png" alt="icon" />
         <div>
-          <Text>155g</Text>
+          <Text>{lipidCount}g</Text>
           <Span>Glucides</Span>
         </div>
       </Container>
       <Container>
         <Icon src="/img/icons/fat-icon.png" alt="icon" />
         <div>
-          <Text>155g</Text>
+          <Text>{proteinCount}g</Text>
           <Span>Lipides</Span>
         </div>
       </Container>

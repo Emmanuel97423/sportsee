@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components';
 import {
@@ -8,7 +9,8 @@ import {
   Legend,
   Line,
   Dot,
-  Area
+  Area,
+  ResponsiveContainer
 } from 'recharts';
 import Average from '../../models/average/Average';
 
@@ -51,9 +53,18 @@ function CustomTooltip({ active, payload }) {
 /**
  * Customized dot component
  */
-function CustomizedDot() {
+function CustomizedDot({ cx, cy }) {
+  console.log('x:', cx);
   return (
-    <Dot r={8} fill="#fff" stroke="#fff" strokeWidth={16} strokeOpacity={0.3} />
+    <Dot
+      r={5}
+      fill="#fff"
+      stroke="#fff"
+      strokeWidth={15}
+      strokeOpacity={0.3}
+      cx={cx}
+      cy={cy}
+    />
   );
 }
 
@@ -98,16 +109,19 @@ export default function LineChartComponent({ average, userId }) {
 
   // Styled-component for container
   const Container = styled.div`
-    width: 30%;
+    /* width: 30%; */
     background-color: red;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `;
 
   return (
     <Container>
       <LineChart
-        width={258}
-        height={263}
+        width={275}
+        height={275}
         data={averageClasse.sessions}
         margin={{ top: 0, right: 0, left: 0, bottom: 30 }}
       >
@@ -126,14 +140,14 @@ export default function LineChartComponent({ average, userId }) {
           tickFormatter={numberX}
           style={{ transform: 'scaleX(0.9)', transformOrigin: 'bottom' }}
         />
-        <YAxis
+        {/* <YAxis
           tickLine={false}
           axisLine={false}
           orientation="right"
           tooltipShow={false}
           tick={false}
           domain={['dataMin - 10', 'dataMax + 50']}
-        />
+        /> */}
         <Tooltip payload={averageClasse.sessions} content={<CustomTooltip />} />
         <Legend
           align="left"
@@ -153,7 +167,7 @@ export default function LineChartComponent({ average, userId }) {
           dot={false}
           activeDot={<CustomizedDot />}
         />
-        <Area type="monotone" dataKey="day" stroke="#8884d8" fill="#8884d8" />
+        {/* <Area type="monotone" dataKey="day" stroke="#8884d8" fill="#8884d8" /> */}
       </LineChart>
     </Container>
   );

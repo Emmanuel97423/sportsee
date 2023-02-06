@@ -44,7 +44,13 @@ export default function Dashboard() {
     const { keyData } = filteredUser[0];
 
     setTodayScore([...todayScore, filteredUser[0]]);
-    setDataKey({ ...dataKey, calorieCount: keyData.calorieCount });
+    setDataKey({
+      ...dataKey,
+      calorieCount: keyData.calorieCount,
+      carbohydrateCount: keyData.carbohydrateCount,
+      lipidCount: keyData.lipidCount,
+      proteinCount: keyData.proteinCount
+    });
     setFirstNameState(firstName);
   }, []);
   const activitySelectedByUserId = activityState.filter(
@@ -52,11 +58,26 @@ export default function Dashboard() {
   );
 
   const Div = styled.div`
-    padding: 30px;
+    padding: 30px 30px 30px 150px;
   `;
 
-  const Title = styled.div`
+  const Title = styled.div.attrs(() => ({
+    tabIndex: 0
+  }))`
     width: 100%;
+
+    &.title,
+    h1 {
+      font-size: 48px;
+    }
+    span {
+      color: red;
+      font-size: 48px;
+    }
+    p {
+      font-size: 18px;
+      margin: 40px 0 100px 0;
+    }
   `;
 
   const Container = styled.div`
@@ -64,7 +85,7 @@ export default function Dashboard() {
     display: flex;
   `;
   const Main = styled.div`
-    width: 80%;
+    width: 100%;
   `;
   const Box = styled.div`
     height: auto;
@@ -74,28 +95,31 @@ export default function Dashboard() {
   `;
 
   const SideBox = styled.div`
-    width: 20%;
+    width: 30%;
   `;
 
   return (
     <Div>
       <Title>
-        <h1>Bonjour {firstNameState}</h1>
+        <h1 className="title">
+          Bonjour <span className="title__text--red">{firstNameState}</span>
+        </h1>
+        <p>Félicitation! Vous avez explosé vos objectifs hier 👏</p>
       </Title>
       <Container>
         <Main>
-          {/* <Box> */}
-          <BarChartComponent userActivity={activitySelectedByUserId} />
-          {/* </Box> */}
-          {/* <Box> */}
-          <LineChartComponent average={averageState} userId={parseIntId} />
+          <Box>
+            <BarChartComponent userActivity={activitySelectedByUserId} />
+          </Box>
+          <Box>
+            <LineChartComponent average={averageState} userId={parseIntId} />
 
-          <RadarChartComponent
-            performances={performancesState}
-            userId={parseIntId}
-          />
-          <RadialChartComponent data={todayScore} />
-          {/* </Box> */}
+            <RadarChartComponent
+              performances={performancesState}
+              userId={parseIntId}
+            />
+            <RadialChartComponent data={todayScore} />
+          </Box>
         </Main>
 
         <SideBox>
