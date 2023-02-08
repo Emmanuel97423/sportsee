@@ -1,5 +1,9 @@
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable prettier/prettier */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import {
   LineChart,
@@ -10,9 +14,49 @@ import {
   Line,
   Dot,
   Area,
-  ResponsiveContainer
+  ResponsiveContainer,
+  AreaChart
 } from 'recharts';
 import Average from '../../models/average/Average';
+
+// Styled-component for container
+const Container = styled.div`
+  /* width: 30%; */
+  background-color: red;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TooltopDiv = styled.div`
+  background-color: #fff;
+  width: 40px;
+  height: 25px;
+  font-size: 8px;
+  line-height: 24px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LegendCustom = styled.div`
+  width: 100%;
+  color: #fff;
+`;
+const LegendText = styled.p`
+  opacity: 0.5;
+`;
+
+const GradientChart = styled.div.attrs(() => ({ tabIndex: 0 }))`
+  position: absolute;
+  width: 275px;
+  height: 350px;
+  &.gradient-lineChart {
+    background: linear-gradient(90deg, #fff 0 50%, transparent 50% 100%);
+  }
+`;
 
 /**
  * Filter the user's average data
@@ -27,18 +71,8 @@ function filterUserAverage(userDataAverage, id) {
  * Custom tooltip component
  * @param {Object} props - active, payload
  */
+
 function CustomTooltip({ active, payload }) {
-  const TooltopDiv = styled.div`
-    background-color: #fff;
-    width: 40px;
-    height: 25px;
-    font-size: 8px;
-    line-height: 24px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  `;
   if (active && payload && payload.length) {
     return (
       <TooltopDiv>
@@ -54,7 +88,6 @@ function CustomTooltip({ active, payload }) {
  * Customized dot component
  */
 function CustomizedDot({ cx, cy }) {
-  console.log('x:', cx);
   return (
     <Dot
       r={5}
@@ -72,15 +105,8 @@ function CustomizedDot({ cx, cy }) {
  * Customized Legend component
  * @returns {JSX.Element} - a customized legend component
  */
-function renderLegend() {
-  const LegendCustom = styled.div`
-    width: 100%;
-    color: #fff;
-  `;
-  const LegendText = styled.p`
-    opacity: 0.5;
-  `;
 
+function renderLegend() {
   return (
     <LegendCustom>
       <LegendText>Durée moyenne des sessions</LegendText>
@@ -95,11 +121,13 @@ function renderLegend() {
  * @param {string} props.userId - ID of user
  * @returns {JSX.Element} - Renders a Line Chart component
  */
+
 export default function LineChartComponent({ average, userId }) {
   // Filter average data by user ID
   const averageFilterById = filterUserAverage(average, userId);
   // Create an instance of Average class
   const averageClasse = new Average(averageFilterById[0]);
+  const chartRef = useRef(null);
 
   // Function to format X-axis tick labels
   const numberX = (item) => {
@@ -107,24 +135,58 @@ export default function LineChartComponent({ average, userId }) {
     return `${nameTab[item - 1]}`;
   };
 
-  // Styled-component for container
-  const Container = styled.div`
-    /* width: 30%; */
-    background-color: red;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `;
+  function mouseMove(e) {
+    if (!e.isTooltipActive) {
+      return;
+    }
+    const chartWidth = chartRef.current.props.width;
+    const x = e.activeCoordinate.x;
+    const y = e.activeCoordinate.y;
+    const pourcent = (x / chartWidth) * 100;
+    const reste = 100 - pourcent;
+
+    const gradientLine = document.querySelector('.gradient-lineChart');
+    gradientLine.setAttribute(
+      'style',
+      `opacity:0.2 ; background: linear-gradient(90deg, #fff,#fff,#fff,#fff  0 ${pourcent}%, transparent,transparent,transparent, transparent ${reste}% 100%)`
+    );
+    // gradientLine.setAttribute('style', 'height:100px');
+
+    // console.log('pourcent:', pourcent);
+  }
 
   return (
     <Container>
+      <GradientChart className="gradient-lineChart"></GradientChart>
       <LineChart
+        ref={chartRef}
         width={275}
         height={275}
         data={averageClasse.sessions}
         margin={{ top: 0, right: 0, left: 0, bottom: 30 }}
+        onMouseMove={mouseMove}
       >
+        <defs>
+          {' '}
+          <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
+            <stop
+              offset="0%"
+              style={{ stopColor: 'rgb(255,255,255)', stopOpacity: 0.2 }}
+            />
+            <stop
+              offset="50%"
+              style={{ stopColor: 'rgb(255,255,255)', stopOpacity: 0.5 }}
+            />
+            <stop
+              offset="75%"
+              style={{ stopColor: 'rgb(255,255,255)', stopOpacity: 0.7 }}
+            />
+            <stop
+              offset="100%"
+              style={{ stopColor: 'rgb(255,255,255)', stopOpacity: 1 }}
+            />
+          </linearGradient>
+        </defs>
         <XAxis
           dataKey="day"
           axisLine={false}
@@ -148,7 +210,11 @@ export default function LineChartComponent({ average, userId }) {
           tick={false}
           domain={['dataMin - 10', 'dataMax + 50']}
         /> */}
-        <Tooltip payload={averageClasse.sessions} content={<CustomTooltip />} />
+        <Tooltip
+          payload={averageClasse.sessions}
+          content={<CustomTooltip />}
+          cursor={false}
+        />
         <Legend
           align="left"
           verticalAlign="top"
@@ -163,11 +229,29 @@ export default function LineChartComponent({ average, userId }) {
         <Line
           type="monotone"
           dataKey="sessionLength"
-          stroke="#82ca9d"
+          stroke="url(#grad1)"
           dot={false}
           activeDot={<CustomizedDot />}
         />
-        {/* <Area type="monotone" dataKey="day" stroke="#8884d8" fill="#8884d8" /> */}
+        {/* <AreaChart
+          width={275}
+          height={275}
+          data={averageClasse.sessions}
+          margin={{
+            top: 10,
+            right: 30,
+            left: 0,
+            bottom: 0
+          }}
+        >
+          <Area
+            type="monotone"
+            dataKey="sessionLength"
+            stroke="green"
+            fill="blue"
+            fillOpacity={1}
+          />
+        </AreaChart> */}
       </LineChart>
     </Container>
   );

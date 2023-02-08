@@ -94,6 +94,14 @@ export default function Dashboard() {
     justify-content: space-between;
   `;
 
+  const BoxLine = styled.div`
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+  `;
+
   const SideBox = styled.div`
     width: 30%;
   `;
@@ -108,9 +116,9 @@ export default function Dashboard() {
       </Title>
       <Container>
         <Main>
-          <Box>
+          <BoxLine>
             <BarChartComponent userActivity={activitySelectedByUserId} />
-          </Box>
+          </BoxLine>
           <Box>
             <LineChartComponent average={averageState} userId={parseIntId} />
 

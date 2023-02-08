@@ -25,7 +25,7 @@ export default function SideBar() {
     <div className={styles.container}>
       <div className={styles.iconsList}>
         {icons.map((icon) => {
-          return <img src={icon.url} alt="icon" />;
+          return <img src={icon.url} alt="icon" key={icon.url} />;
         })}
       </div>
       <div className={styles.copyright}>

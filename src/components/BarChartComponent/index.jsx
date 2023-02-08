@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable consistent-return */
@@ -15,6 +16,23 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import styled from 'styled-components';
+
+const DivTooltip = styled.div.attrs((/* props */) => ({ tabIndex: 0 }))`
+  width: 40px;
+  height: 65px;
+  background-color: #e60000;
+  text-align: center;
+  & ul {
+    height: 100%;
+    color: #ffff;
+    font-size: 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    font-weight: 500;
+  }
+`;
 
 function legendRenderColor(value) {
   let isCalories = false;
@@ -70,7 +88,7 @@ function renderCustomizedLegend(props) {
       <p
         style={{
           fontFamily: 'Roboto, sans-serif',
-          fontWeight: '500',
+          fontWeight: '700',
           fontSize: '15px'
         }}
       >
@@ -88,6 +106,21 @@ function renderCustomizedLegend(props) {
       </ul>
     </div>
   );
+}
+
+function CustomTooltip({ active, payload, label }) {
+  if (active && payload && payload.length) {
+    return (
+      <DivTooltip className="custom-tooltip">
+        <ul>
+          <p>{payload[0].value}Kg</p>
+          <p>{payload[1].value}Kcal</p>
+        </ul>
+      </DivTooltip>
+    );
+  }
+
+  return null;
 }
 
 // const CustomBar = styled(Bar)`
@@ -155,7 +188,12 @@ export default function BarChartComponent({ userActivity }) {
                 {/* <CartesianGrid strokeDasharray="3 3" /> */}
                 <XAxis dataKey={index} axisLine={false} tickLine={false} />
                 <YAxis orientation="right" axisLine={false} tickLine={false} />
-                <Tooltip />
+                <Tooltip
+                  content={<CustomTooltip />}
+                  // itemStyle={<CustomItemStyle />}
+                  // contentStyle={<CustomContentStyle />}
+                />
+                {/* <Tooltip /> */}
                 <Legend
                   content={renderCustomizedLegend}
                   verticalAlign="top"
