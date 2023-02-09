@@ -101,6 +101,8 @@ export default function Dashboard() {
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
+    background-color: #fbfbfb;
+    padding: 20px 0 20px 0;
   `;
 
   const SideBox = styled.div`
