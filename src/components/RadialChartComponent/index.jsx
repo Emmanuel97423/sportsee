@@ -56,7 +56,7 @@ function customLabel({ value }) {
     <foreignObject x={48} y={48} width={164} height={164}>
       <ValueContent>
         <LabelConteneur>
-          <Value>{value}%</Value>
+          <Value>{value * 100}%</Value>
           <Span>
             de votre <br /> objectif
           </Span>

@@ -10,15 +10,23 @@ export default function DataKey(props) {
   const lipidCount = props.dataKey.lipidCount;
   const proteinCount = props.dataKey.proteinCount;
 
+  const DataKeyContainer = styled.div`
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  `;
   const Container = styled.div`
     height: 125px;
+    width: 210px;
     background-color: #fbfbfb;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     border-radius: 5px;
-    padding-left: 32px;
-    margin-bottom: 40px;
+    padding: 0 32px 0 32px;
+    /* margin-bottom: 40px; */
   `;
   const Icon = styled.img`
     width: 60px;
@@ -39,7 +47,7 @@ export default function DataKey(props) {
   `;
 
   return (
-    <div>
+    <DataKeyContainer>
       <Container>
         <Icon src="/img/icons/calories-icon.png" alt="icon" />
         <div>
@@ -68,6 +76,6 @@ export default function DataKey(props) {
           <Span>Lipides</Span>
         </div>
       </Container>
-    </div>
+    </DataKeyContainer>
   );
 }

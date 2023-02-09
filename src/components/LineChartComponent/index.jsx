@@ -46,15 +46,16 @@ const LegendCustom = styled.div`
   color: #fff;
 `;
 const LegendText = styled.p`
-  opacity: 0.5;
+  opacity: 0.6;
 `;
 
 const GradientChart = styled.div.attrs(() => ({ tabIndex: 0 }))`
   position: absolute;
   width: 275px;
-  height: 350px;
+  height: 303px;
+  opacity: 0.1;
   &.gradient-lineChart {
-    background: linear-gradient(90deg, #fff 0 50%, transparent 50% 100%);
+    background: linear-gradient(90deg, transparent 0% 50%, #000 50 100%);
   }
 `;
 
@@ -148,7 +149,7 @@ export default function LineChartComponent({ average, userId }) {
     const gradientLine = document.querySelector('.gradient-lineChart');
     gradientLine.setAttribute(
       'style',
-      `opacity:0.2 ; background: linear-gradient(90deg, #fff,#fff,#fff,#fff  0 ${pourcent}%, transparent,transparent,transparent, transparent ${reste}% 100%)`
+      `background: linear-gradient(90deg, transparent,transparent,transparent, transparent  0 ${pourcent}%,  #000,#000,#000,#000 ${reste}% 100%)`
     );
     // gradientLine.setAttribute('style', 'height:100px');
 
@@ -171,7 +172,7 @@ export default function LineChartComponent({ average, userId }) {
           <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
             <stop
               offset="0%"
-              style={{ stopColor: 'rgb(255,255,255)', stopOpacity: 0.2 }}
+              style={{ stopColor: 'rgb(255,255,255)', stopOpacity: 0.4 }}
             />
             <stop
               offset="50%"
@@ -196,20 +197,14 @@ export default function LineChartComponent({ average, userId }) {
           tickMargin={20}
           tick={{
             fill: '#fff',
-            fontFamily: 'Roboto',
+            opacity: '0.5',
+            fontFamily: 'Roboto, sans-serif',
             fontSize: 14
           }}
           tickFormatter={numberX}
           style={{ transform: 'scaleX(0.9)', transformOrigin: 'bottom' }}
         />
-        {/* <YAxis
-          tickLine={false}
-          axisLine={false}
-          orientation="right"
-          tooltipShow={false}
-          tick={false}
-          domain={['dataMin - 10', 'dataMax + 50']}
-        /> */}
+
         <Tooltip
           payload={averageClasse.sessions}
           content={<CustomTooltip />}
@@ -230,28 +225,10 @@ export default function LineChartComponent({ average, userId }) {
           type="monotone"
           dataKey="sessionLength"
           stroke="url(#grad1)"
+          strokeWidth={1.9}
           dot={false}
           activeDot={<CustomizedDot />}
         />
-        {/* <AreaChart
-          width={275}
-          height={275}
-          data={averageClasse.sessions}
-          margin={{
-            top: 10,
-            right: 30,
-            left: 0,
-            bottom: 0
-          }}
-        >
-          <Area
-            type="monotone"
-            dataKey="sessionLength"
-            stroke="green"
-            fill="blue"
-            fillOpacity={1}
-          />
-        </AreaChart> */}
       </LineChart>
     </Container>
   );

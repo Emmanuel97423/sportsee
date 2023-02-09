@@ -185,7 +185,7 @@ export default function BarChartComponent({ userActivity }) {
                   bottom: 5
                 }}
               >
-                {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey={index} axisLine={false} tickLine={false} />
                 <YAxis orientation="right" axisLine={false} tickLine={false} />
                 <Tooltip

@@ -58,6 +58,7 @@ export default function Dashboard() {
   );
 
   const Div = styled.div`
+    max-width: 1200px;
     padding: 30px 30px 30px 150px;
   `;
 
@@ -89,14 +90,14 @@ export default function Dashboard() {
   `;
   const Box = styled.div`
     height: auto;
-    width: 100%;
+    width: 97%;
     display: flex;
     justify-content: space-between;
   `;
 
   const BoxLine = styled.div`
     height: auto;
-    width: 100%;
+    width: 97%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
