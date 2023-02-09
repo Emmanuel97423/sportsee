@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 import React from 'react';
@@ -6,28 +7,80 @@ import {
   RadialBarChart,
   RadialBar,
   PolarAngleAxis,
+  Customized,
+  PolarRadiusAxis,
+  Cell,
+  Pie,
+  Label,
+  LabelList,
   ResponsiveContainer,
   Legend
 } from 'recharts';
 
-function CustomLabel({ value }) {
-  console.log('value:', value);
-  const Text = styled.div`
-    background-color: green;
-    color: black;
-  `;
+const ValueContent = styled.div`
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LabelConteneur = styled.div`
+  /* position: absolute; */
+  /* width: 260px; */
+  /* height: 260px; */
+  text-align: center;
+`;
+
+const Value = styled.p`
+  /* position: absolute; */
+  font-size: 26px;
+  font-weight: 700;
+  color: #282d30;
+  margin: 0 0 10px 0;
+`;
+const Span = styled.span`
+  /* position: absolute; */
+  font-size: 16px;
+  font-weight: 500;
+  color: #74798c;
+  line-height: 1.5;
+`;
+
+function customLabel({ value }) {
   return (
-    <div>
-      <Text>Hello {value}</Text>
-    </div>
+    <foreignObject x={48} y={48} width={164} height={164}>
+      <ValueContent>
+        <LabelConteneur>
+          <Value>{value}%</Value>
+          <Span>
+            de votre <br /> objectif
+          </Span>
+        </LabelConteneur>
+      </ValueContent>
+    </foreignObject>
   );
 }
+
+// const PieStyle = styled.div`
+//   width: 160px;
+//   height: 160px;
+//   background-color: green;
+// `;
+// function CustomizedPie(props) {
+//   return <PieStyle>hello</PieStyle>;
+// }
 
 export default function RadialChartComponent({ data }) {
   const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #fbfbfb;
   `;
   return (
     <Container>
@@ -35,7 +88,7 @@ export default function RadialChartComponent({ data }) {
         width={260}
         height={260}
         innerRadius="100%"
-        outerRadius="50%"
+        outerRadius="70%"
         data={data}
         startAngle={540}
         endAngle={180}
@@ -43,13 +96,15 @@ export default function RadialChartComponent({ data }) {
       >
         <RadialBar
           minAngle={15}
-          // label={{ fill: '#000', position: 'center' }}
-          label={<CustomLabel />}
+          label={customLabel}
           clockWise={true}
           dataKey="todayScore"
           fill="#FF0000"
-          background
-        />
+          cornerRadius={20}
+        >
+          {' '}
+          {/* <Customized component={CustomizedPie} /> */}
+        </RadialBar>
 
         <PolarAngleAxis
           type="number"
