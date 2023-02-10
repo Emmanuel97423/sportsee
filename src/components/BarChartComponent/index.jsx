@@ -1,10 +1,24 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable consistent-return */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable array-callback-return */
+
+/**
+ * BarChartComponent
+ *
+ * Renders a bar chart showing the weight and calories burned by the user in each session.
+ *
+ * @component
+ * @param {Array} userActivity - The array of user activity objects.
+ * @returns {JSX} The BarChart component.
+ */
+
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import {
   BarChart,
   Bar,
@@ -17,7 +31,7 @@ import {
 } from 'recharts';
 import styled from 'styled-components';
 
-const DivTooltip = styled.div.attrs((/* props */) => ({ tabIndex: 0 }))`
+const DivTooltip = styled.div.attrs(() => ({ tabIndex: 0 }))`
   width: 40px;
   height: 65px;
   background-color: #e60000;
@@ -33,6 +47,14 @@ const DivTooltip = styled.div.attrs((/* props */) => ({ tabIndex: 0 }))`
     font-weight: 500;
   }
 `;
+
+/**
+ * legendRenderColor - Renders the legend color based on the value.
+ *
+ * @function
+ * @param {string} value - The value of the legend color.
+ * @returns {JSX} The legend color component.
+ */
 
 function legendRenderColor(value) {
   let isCalories = false;
@@ -73,6 +95,14 @@ function legendRenderColor(value) {
   );
 }
 
+/**
+ * renderCustomizedLegend - Renders a custom legend component.
+ *
+ * @function
+ * @param {object} props - The legend properties.
+ * @returns {JSX} The customized legend component.
+ */
+
 function renderCustomizedLegend(props) {
   const { payload } = props;
 
@@ -108,6 +138,16 @@ function renderCustomizedLegend(props) {
   );
 }
 
+/**
+
+CustomTooltip - a custom tooltip component for a bar chart
+@param {Object} props
+@param {Boolean} props.active - indicates whether the tooltip is active or not
+@param {Array} props.payload - array of data used to display in the tooltip
+@param {String} props.label - label for the tooltip
+@returns {JSX.Element} returns a custom tooltip component
+*/
+
 function CustomTooltip({ active, payload, label }) {
   if (active && payload && payload.length) {
     return (
@@ -123,49 +163,13 @@ function CustomTooltip({ active, payload, label }) {
   return null;
 }
 
-// const CustomBar = styled(Bar)`
-//   &.recharts-bar {
-//     &:first-child {
-//       border-top-left-radius: 15px;
-//       border-top-right-radius: 15px;
-//     }
-//   }
-// `;
+/**
 
-// function ShapeBar({ x, y, width, height, fill, payload, value, radius }) {
-//   // const LineBar = styled.div`
-//   //   color: green;
-//   // `;
-//   // console.log('props:', props);
-//   return (
-//     <rect
-//       x={x}
-//       y={y}
-//       width={width}
-//       height={height}
-//       fill={fill}
-//       // rx={5}
-//       radius={10}
-//     />
-//   );
-// }
-// function CustomShape(props) {
-//   const { x, y, width, height, fill } = props;
-//   const radius = 5;
-
-//   return (
-//     <path
-//       d={`M${x},${y + height}
-//              v-${height - 2 * radius}
-//              a${radius},${radius} 0 0 1 ${radius},${radius}
-//              h${width - 2 * radius}
-//              a${radius},${radius} 0 0 1 ${radius},-${radius}
-//              v${height - 2 * radius}
-//              Z`}
-//       fill={fill}
-//     />
-//   );
-// }
+BarChartComponent - main component for generating a bar chart
+@param {Object} props
+@param {Array} props.userActivity - an array of user activity data used to generate the chart
+@returns {JSX.Element} returns a bar chart component
+*/
 
 export default function BarChartComponent({ userActivity }) {
   return (
@@ -188,25 +192,17 @@ export default function BarChartComponent({ userActivity }) {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey={index} axisLine={false} tickLine={false} />
                 <YAxis orientation="right" axisLine={false} tickLine={false} />
-                <Tooltip
-                  content={<CustomTooltip />}
-                  // itemStyle={<CustomItemStyle />}
-                  // contentStyle={<CustomContentStyle />}
-                />
-                {/* <Tooltip /> */}
+                <Tooltip content={<CustomTooltip />} />
                 <Legend
                   content={renderCustomizedLegend}
                   verticalAlign="top"
                   align="right"
                 />
-                {/* <CustomBar dataKey="kilogram" fill="#282D30" /> */}
                 <Bar
                   dataKey="kilogram"
                   fill="#282D30"
                   minPointSize={5}
                   barSize={7}
-                  // shape={<ShapeBar />}
-                  // rectangle={{ radius: 15 }}
                   radius={[15, 15, 0, 0]}
                 />
 
@@ -225,3 +221,7 @@ export default function BarChartComponent({ userActivity }) {
     </>
   );
 }
+
+BarChartComponent.propTypes = {
+  userActivity: PropTypes.array
+};

@@ -1,8 +1,18 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-unused-vars */
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * @function DataKey
+ * @param {object} props - Object containing the properties of the DataKey component
+ * @returns {JSX} - Returns a JSX component that displays information about the calorie count, carbohydrate count, lipid count, and protein count.
+ */
 
 export default function DataKey(props) {
   const calories = props.dataKey.calorieCount;
@@ -79,3 +89,7 @@ export default function DataKey(props) {
     </DataKeyContainer>
   );
 }
+
+DataKey.propTypes = {
+  props: PropTypes.object
+};

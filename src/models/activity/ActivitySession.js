@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-// import ActivitySessionData from './ActivitySessionData';
 
 /**
  * class ActivitySession - data modeling
@@ -7,9 +6,6 @@
 
 export default class ActivitySession {
   constructor(data) {
-    // console.log('data:', data);
-    // this._userId = data.userId;
-    // this._sessions = data.sessions;
     this._day = data.day;
     this._kilogram = data.kilogram;
     this._calories = data.calories;
@@ -50,8 +46,4 @@ export default class ActivitySession {
   get calories() {
     return this._calories;
   }
-
-  /**
-   * Get the
-   */
 }

@@ -3,10 +3,6 @@
 /**
  * class AverageSession - data modeling
  */
-// import DayConverter from './AverageDayConvert';
-
-// const converter = new DayConverter();
-// Output: "Wednesday"
 
 export default class AverageSession {
   constructor(data) {

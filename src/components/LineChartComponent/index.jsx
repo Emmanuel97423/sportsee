@@ -3,8 +3,12 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/forbid-prop-types */
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import propTypes from 'prop-types';
 import {
   LineChart,
   XAxis,
@@ -233,3 +237,8 @@ export default function LineChartComponent({ average, userId }) {
     </Container>
   );
 }
+
+LineChartComponent.propTypes = {
+  average: propTypes.number,
+  userId: propTypes.number
+};

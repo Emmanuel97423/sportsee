@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   RadarChart,
@@ -66,3 +70,8 @@ export default function RadarChartComponent({ performances, userId }) {
     // </ResponsiveContainer>
   );
 }
+
+RadarChartComponent.propTypes = {
+  performances: PropTypes.array,
+  userId: PropTypes.number
+};
