@@ -10,7 +10,7 @@ import {
   RouteObject
 } from 'react-router-dom';
 
-import DefaultLayout from './layout/LayoutDefault';
+// import DefaultLayout from './layout/LayoutDefault';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import './App.css';
