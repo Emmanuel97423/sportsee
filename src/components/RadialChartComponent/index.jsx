@@ -7,7 +7,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { RadialBarChart, RadialBar, PolarAngleAxis, Legend } from 'recharts';
+import {
+  RadialBarChart,
+  RadialBar,
+  PolarAngleAxis,
+  Legend,
+  Text
+} from 'recharts';
 
 /**
  * A styled component for the value content inside the chart
@@ -77,6 +83,28 @@ function customLabel({ value }) {
 }
 
 /**
+ * A custom Legend component for the chart
+ *
+ * @param {Object}  containing the Legend
+ * @returns {JSX} Returns a React element
+ */
+const LegendStyle = styled.div`
+  position: absolute;
+  padding: 5px 0 0 30px;
+  font-weight: bold;
+  font-size: 15px;
+  color: #20253a; ;
+`;
+
+function CustomLegend() {
+  return (
+    <LegendStyle>
+      <p>Score</p>
+    </LegendStyle>
+  );
+}
+
+/**
  * A radial chart component
  *
  * @param {Object} props Props passed to the component
@@ -94,7 +122,6 @@ export default function RadialChartComponent({ data }) {
   `;
   return (
     <Container>
-      <Legend />
       <RadialBarChart
         width={260}
         height={260}
@@ -120,6 +147,7 @@ export default function RadialChartComponent({ data }) {
           angleAxisId={0}
           tick={false}
         />
+        <Legend verticalAlign="top" content={<CustomLegend />} />
       </RadialBarChart>
     </Container>
   );
