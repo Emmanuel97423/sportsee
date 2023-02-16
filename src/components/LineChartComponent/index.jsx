@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unreachable */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable prettier/prettier */
 /* eslint-disable prefer-destructuring */
@@ -21,7 +23,7 @@ import {
   ResponsiveContainer,
   AreaChart
 } from 'recharts';
-import Average from '../../models/average/Average';
+// import Average from '../../models/average/Average';
 
 // Styled-component for container
 const Container = styled.div`
@@ -68,9 +70,9 @@ const GradientChart = styled.div.attrs(() => ({ tabIndex: 0 }))`
  * @param {Array} userDataAverage - array of average data
  * @param {string} id - user id
  */
-function filterUserAverage(userDataAverage, id) {
-  return userDataAverage.filter((average) => average.userId === id);
-}
+// function filterUserAverage(userDataAverage, id) {
+//   return userDataAverage.filter((average) => average.userId === id);
+// }
 
 /**
  * Custom tooltip component
@@ -128,10 +130,13 @@ function renderLegend() {
  */
 
 export default function LineChartComponent({ average, userId }) {
+  // console.log('userId:', userId);
+  console.log('average:', average);
+
   // Filter average data by user ID
-  const averageFilterById = filterUserAverage(average, userId);
+  // const averageFilterById = filterUserAverage(average, userId);
   // Create an instance of Average class
-  const averageClasse = new Average(averageFilterById[0]);
+  // const averageClasse = new Average(averageFilterById[0]);
   const chartRef = useRef(null);
 
   // Function to format X-axis tick labels
@@ -167,7 +172,7 @@ export default function LineChartComponent({ average, userId }) {
         ref={chartRef}
         width={275}
         height={275}
-        data={averageClasse.sessions}
+        data={average}
         margin={{ top: 0, right: 0, left: 0, bottom: 30 }}
         onMouseMove={mouseMove}
       >
@@ -209,11 +214,7 @@ export default function LineChartComponent({ average, userId }) {
           style={{ transform: 'scaleX(0.9)', transformOrigin: 'bottom' }}
         />
 
-        <Tooltip
-          payload={averageClasse.sessions}
-          content={<CustomTooltip />}
-          cursor={false}
-        />
+        <Tooltip payload={average} content={<CustomTooltip />} cursor={false} />
         <Legend
           align="left"
           verticalAlign="top"
@@ -239,6 +240,6 @@ export default function LineChartComponent({ average, userId }) {
 }
 
 LineChartComponent.propTypes = {
-  average: propTypes.number,
-  userId: propTypes.number
+  average: propTypes.array,
+  userId: propTypes.any
 };

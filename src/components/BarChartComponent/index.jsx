@@ -181,7 +181,7 @@ export default function BarChartComponent({ userActivity }) {
               <BarChart
                 width={300}
                 height={400}
-                data={element.sessions}
+                data={element}
                 margin={{
                   top: 5,
                   right: 30,

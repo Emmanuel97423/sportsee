@@ -7,7 +7,9 @@ import ActivitySession from './ActivitySession';
 
 export default class Activity {
   constructor(data) {
-    this._sessions = data.map((element) => new ActivitySession(element));
+    this._sessions = data.sessions.map(
+      (element) => new ActivitySession(element)
+    );
   }
   /**
    * Get the userId value

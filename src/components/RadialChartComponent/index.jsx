@@ -15,6 +15,8 @@ import {
   Text
 } from 'recharts';
 
+import Activity from '../../models/activity/Activity';
+
 /**
  * A styled component for the value content inside the chart
  */
@@ -112,8 +114,8 @@ function CustomLegend() {
  * @returns {JSX} Returns a React element
  */
 
-export default function RadialChartComponent({ data }) {
-  console.log('data:', data);
+export default function RadialChartComponent({ todayScore }) {
+  // const DataTestClass = new Activity(todayScore);
   const Container = styled.div`
     display: flex;
     justify-content: center;
@@ -127,7 +129,7 @@ export default function RadialChartComponent({ data }) {
         height={260}
         innerRadius="100%"
         outerRadius="70%"
-        data={data}
+        data={todayScore}
         startAngle={540}
         endAngle={180}
         barSize={10}

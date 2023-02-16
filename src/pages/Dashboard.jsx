@@ -12,18 +12,30 @@ import DataKey from '../components/DataKey';
 import mockDataJson from '../__mock__/data.json';
 import HttpService from '../service/httpService';
 
+import Activity from '../models/activity/Activity';
+import Average from '../models/average/Average';
+
+console.log('mockDataJson:', mockDataJson);
+
 function filterUsers(userDataFiltered, id) {
   return userDataFiltered.filter((user) => user.id === id);
+}
+
+/**
+ * Filter the user's average data for mock
+ * @param {Array} userDataAverage - array of average data
+ * @param {string} id - user id
+ */
+function filterUserAverage(userDataAverage, id) {
+  return userDataAverage.filter((average) => average.userId === id);
 }
 
 export default function Dashboard() {
   const { id } = useParams();
   const parseIntId = parseInt(id, 10);
 
-  const [averageState, setAverageState] = useState(mockDataJson.average);
-  const [activityState, setActivityState] = useState(
-    mockDataJson.usersActivity
-  );
+  const [averageState, setAverageState] = useState([]);
+  const [activityState, setActivityState] = useState([]);
   const [performancesState, setPerformancesState] = useState(
     mockDataJson.performances
   );
@@ -40,51 +52,90 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
+  const mockData = false;
+
   useEffect(() => {
-    // Récupère un élément par ID
-    HttpService.getUserById(id)
-      .then((response) => {
-        // Traite la réponse de la requête
+    if (!mockData) {
+      // Récupère un élément par ID
+      HttpService.getUserById(id)
+        .then((response) => {
+          // Traite la réponse de la requête
 
-        // console.log(response.data.data);
-        const dataFetched = response.data.data;
-        console.log('dataFetched:', dataFetched);
-        setData([...data, dataFetched]);
-        const { firstName } = dataFetched.userInfos;
-        const todayScore = dataFetched.todayScore;
+          // console.log(response.data.data);
+          const dataFetched = response.data.data;
+          // console.log('dataFetched:', dataFetched);
+          setData([...data, dataFetched]);
+          const { firstName } = dataFetched.userInfos;
 
-        setFirstNameState(firstName);
-        setTodayScore([...todayScoreState, todayScore]);
-      })
-      .catch((error) => {
-        // Traite les erreurs de la requête
-        console.error(error);
+          setFirstNameState(firstName);
+          setTodayScore([...todayScoreState, dataFetched]);
+          setDataKey({
+            ...dataKey,
+            calorieCount: dataFetched.keyData.calorieCount,
+            carbohydrateCount: dataFetched.keyData.carbohydrateCount,
+            lipidCount: dataFetched.keyData.lipidCount,
+            proteinCount: dataFetched.keyData.proteinCount
+          });
+          HttpService.getActivityByUserId(id)
+            .then((activity) => {
+              const activityApiResponse = activity.data.data;
+              const activityClassModel = new Activity(activityApiResponse);
+              setActivityState([...activityState, activityClassModel.sessions]);
+              HttpService.getAverageSessionsByUserId(id)
+                .then((averageSession) => {
+                  const averageSessionByApi = averageSession.data.data;
+                  console.log(
+                    'averageSessionByApi:',
+                    averageSessionByApi.sessions
+                  );
+
+                  setAverageState(averageSessionByApi.sessions);
+                })
+                .catch((error) => {
+                  console.log('error:', error);
+                });
+            })
+            .catch((error) => {
+              console.log('error:', error);
+            });
+        })
+        .catch((error) => {
+          // Traite les erreurs de la requête
+          console.error(error);
+        });
+    } else {
+      // console.log('mockData:', mockData);
+
+      // Mock Data
+      // setData([...data, mockDataJson]);
+      setData((prevState) => [...prevState, mockDataJson]);
+      // const userData = data.users;
+      const filteredUser = filterUsers(mockDataJson.users, parseIntId);
+      const { firstName } = filteredUser[0].userInfos;
+      const { keyData } = filteredUser[0];
+      setTodayScore([...todayScoreState, filteredUser[0]]);
+      setDataKey({
+        ...dataKey,
+        calorieCount: keyData.calorieCount,
+        carbohydrateCount: keyData.carbohydrateCount,
+        lipidCount: keyData.lipidCount,
+        proteinCount: keyData.proteinCount
       });
+      setFirstNameState(firstName);
+      const filteredAverage = filterUserAverage(
+        mockDataJson.average,
+        parseIntId
+      );
 
-    // Mock Data
-
-    // const userData = data.users;
-    // const filteredUser = filterUsers(userData, parseIntId);
-    // const { firstName } = filteredUser[0].userInfos;
-    // const { keyData } = filteredUser[0];
-
-    // setTodayScore([...todayScore, filteredUser[0]]);
-    // setDataKey({
-    //   ...dataKey,
-    //   calorieCount: keyData.calorieCount,
-    //   carbohydrateCount: keyData.carbohydrateCount,
-    //   lipidCount: keyData.lipidCount,
-    //   proteinCount: keyData.proteinCount
-    // });
-    // setFirstNameState(firstName);
+      setAverageState(filteredAverage[0].sessions);
+    }
   }, []);
 
-  console.log('todayScoreState:', todayScoreState);
-  console.log('data:', data);
+  // console.log('data:', data);
 
-  const activitySelectedByUserId = activityState.filter(
-    (activity) => activity.userId === parseIntId
-  );
+  // const activitySelectedByUserId = activityState.filter(
+  //   (activity) => activity.userId === parseIntId
+  // );
 
   const Div = styled.div`
     max-width: 1200px;
@@ -149,7 +200,7 @@ export default function Dashboard() {
       <Container>
         <Main>
           <BoxLine>
-            <BarChartComponent userActivity={activitySelectedByUserId} />
+            <BarChartComponent userActivity={activityState} />
           </BoxLine>
           <Box>
             <LineChartComponent average={averageState} userId={parseIntId} />
@@ -158,7 +209,7 @@ export default function Dashboard() {
               performances={performancesState}
               userId={parseIntId}
             />
-            <RadialChartComponent data={data} />
+            <RadialChartComponent todayScore={todayScoreState} />
           </Box>
         </Main>
 
