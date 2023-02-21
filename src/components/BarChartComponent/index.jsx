@@ -173,7 +173,7 @@ BarChartComponent - main component for generating a bar chart
 
 export default function BarChartComponent({ userActivity }) {
   return (
-    <>
+    <div>
       {userActivity.map((element, index) => {
         return (
           <Fragment key={index}>
@@ -218,7 +218,7 @@ export default function BarChartComponent({ userActivity }) {
           </Fragment>
         );
       })}
-    </>
+    </div>
   );
 }
 

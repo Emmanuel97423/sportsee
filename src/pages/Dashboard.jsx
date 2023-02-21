@@ -1,9 +1,10 @@
+/* eslint-disable prefer-const */
 /* eslint-disable import/extensions */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import BarChartComponent from '../components/BarChartComponent';
 import RadarChartComponent from '../components/RadarChartComponent';
@@ -44,6 +45,8 @@ function filterUserPerformances(userDataPerformances, id) {
 
 export default function Dashboard() {
   const { id } = useParams();
+  let [searchParams, setSearchParams] = useSearchParams();
+  let [query, setQuery] = React.useState(searchParams.get('mockData'));
   const parseIntId = parseInt(id, 10);
 
   const [averageState, setAverageState] = useState([]);
@@ -62,10 +65,12 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
-  const mockData = false;
+  const mockData = true;
 
   useEffect(() => {
     if (!mockData) {
+      console.log('mockData:', mockData);
+
       HttpService.getPerformanceByUserId(id)
         .then((performance) => {
           const performanceDataByApi = performance.data.data;

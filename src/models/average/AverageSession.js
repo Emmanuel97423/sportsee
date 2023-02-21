@@ -5,6 +5,10 @@
  */
 
 export default class AverageSession {
+  /**
+   * Creates an instance of AverageSession.
+   * @param {Array} data.sessions - The sessions data of the user.
+   */
   constructor(data) {
     this._day = data.day;
     this._sessionLength = data.sessionLength;

@@ -5,6 +5,13 @@
  */
 
 export default class ActivitySession {
+  /**
+   * Creates an instance of ActivitySession.
+   * @constructor
+   * @param {array} data - The data to initialize the ActivitySession instance with.
+ 
+   */
+
   constructor(data) {
     // console.log('dataActivitySession:', data);
     this._day = data.day;
