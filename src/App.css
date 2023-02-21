@@ -1,4 +1,7 @@
-.App {
+@import-normalize;
+/* bring in normalize.css styles */
+
+/* .App {
   text-align: center;
 }
 
@@ -39,4 +42,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

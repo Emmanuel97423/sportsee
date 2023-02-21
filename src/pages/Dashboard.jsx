@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
@@ -14,8 +15,7 @@ import HttpService from '../service/httpService';
 
 import Activity from '../models/activity/Activity';
 import Average from '../models/average/Average';
-
-console.log('mockDataJson:', mockDataJson);
+import Performance from '../models/performances/Performance';
 
 function filterUsers(userDataFiltered, id) {
   return userDataFiltered.filter((user) => user.id === id);
@@ -30,15 +30,25 @@ function filterUserAverage(userDataAverage, id) {
   return userDataAverage.filter((average) => average.userId === id);
 }
 
+/**
+ * Filters user performances by a given user ID.
+ * @param {Array} userDataPerformances - Array of user performances.
+ * @param {string|number} id - The user ID to filter by.
+ * @returns {Array} - Array of filtered user performances.
+ */
+function filterUserPerformances(userDataPerformances, id) {
+  return userDataPerformances.filter(
+    (performance) => performance.userId === id
+  );
+}
+
 export default function Dashboard() {
   const { id } = useParams();
   const parseIntId = parseInt(id, 10);
 
   const [averageState, setAverageState] = useState([]);
   const [activityState, setActivityState] = useState([]);
-  const [performancesState, setPerformancesState] = useState(
-    mockDataJson.performances
-  );
+  const [performancesState, setPerformancesState] = useState([]);
   // const [data, setData] = useState(mockDataJson);
   const [data, setData] = useState([]);
   const [firstNameState, setFirstNameState] = useState('FirstName');
@@ -56,6 +66,17 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!mockData) {
+      HttpService.getPerformanceByUserId(id)
+        .then((performance) => {
+          const performanceDataByApi = performance.data.data;
+          const performancesClasse = new Performance(performanceDataByApi);
+          // radarChartData.push(performancesClasse);
+          setPerformancesState([...performancesState, performancesClasse]);
+        })
+        .catch((error) => {
+          console.log('error:', error);
+        });
+
       // Récupère un élément par ID
       HttpService.getUserById(id)
         .then((response) => {
@@ -84,11 +105,6 @@ export default function Dashboard() {
               HttpService.getAverageSessionsByUserId(id)
                 .then((averageSession) => {
                   const averageSessionByApi = averageSession.data.data;
-                  console.log(
-                    'averageSessionByApi:',
-                    averageSessionByApi.sessions
-                  );
-
                   setAverageState(averageSessionByApi.sessions);
                 })
                 .catch((error) => {
@@ -105,7 +121,13 @@ export default function Dashboard() {
         });
     } else {
       // console.log('mockData:', mockData);
+      const performancesFilter = filterUserPerformances(
+        mockDataJson.performances,
+        parseIntId
+      );
+      const performancesClasse = new Performance(performancesFilter[0]);
 
+      setPerformancesState([...performancesState, performancesClasse]);
       // Mock Data
       // setData([...data, mockDataJson]);
       setData((prevState) => [...prevState, mockDataJson]);
@@ -138,15 +160,11 @@ export default function Dashboard() {
   // );
 
   const Div = styled.div`
-    max-width: 1200px;
-    padding: 30px 30px 30px 150px;
+    /* max-width: 1200px; */
+    padding: 15px 15px 0 130px;
   `;
 
-  const Title = styled.div.attrs(() => ({
-    tabIndex: 0
-  }))`
-    width: 100%;
-
+  const Title = styled.div.attrs(() => ({}))`
     &.title,
     h1 {
       font-size: 48px;
@@ -162,22 +180,28 @@ export default function Dashboard() {
   `;
 
   const Container = styled.div`
-    width: 100%;
     display: flex;
+    justify-content: space-between;
+    @media (max-width: 1024px) {
+      flex-direction: column;
+    }
   `;
   const Main = styled.div`
-    width: 100%;
+    width: 80%;
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
   `;
   const Box = styled.div`
     height: auto;
-    width: 97%;
+    /* width: 97%; */
     display: flex;
     justify-content: space-between;
   `;
 
   const BoxLine = styled.div`
     height: auto;
-    width: 97%;
+    /* width: 97%; */
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
@@ -186,7 +210,7 @@ export default function Dashboard() {
   `;
 
   const SideBox = styled.div`
-    width: 30%;
+    /* width: 20%; */
   `;
 
   return (
@@ -205,11 +229,11 @@ export default function Dashboard() {
           <Box>
             <LineChartComponent average={averageState} userId={parseIntId} />
 
+            <RadialChartComponent todayScore={todayScoreState} />
             <RadarChartComponent
               performances={performancesState}
               userId={parseIntId}
             />
-            <RadialChartComponent todayScore={todayScoreState} />
           </Box>
         </Main>
 

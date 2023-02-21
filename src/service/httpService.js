@@ -20,7 +20,7 @@ class HttpService {
   }
 
   getPerformanceByUserId(userId) {
-    return this.instance.get(`/user/${userId}/average-sessions`);
+    return this.instance.get(`/user/${userId}/performance`);
   }
 }
 

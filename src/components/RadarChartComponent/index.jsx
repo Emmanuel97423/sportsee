@@ -1,9 +1,11 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unreachable */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -14,19 +16,6 @@ import {
   Radar,
   ResponsiveContainer
 } from 'recharts';
-import Performance from '../../models/performances/Performance';
-
-/**
- * Filters user performances by a given user ID.
- * @param {Array} userDataPerformances - Array of user performances.
- * @param {string|number} id - The user ID to filter by.
- * @returns {Array} - Array of filtered user performances.
- */
-function filterUserPerformances(userDataPerformances, id) {
-  return userDataPerformances.filter(
-    (performance) => performance.userId === id
-  );
-}
 
 /**
  * A component that renders a radar chart of a user's performances.
@@ -35,15 +24,22 @@ function filterUserPerformances(userDataPerformances, id) {
  * @param {string|number} props.userId - The user ID of the user whose performances to display.
  */
 export default function RadarChartComponent({ performances, userId }) {
-  const filteredPerformance = filterUserPerformances(performances, userId);
+  const [data, setData] = useState([]);
+  // const filteredPerformance = filterUserPerformances(performances, userId);
+  useEffect(() => {
+    if (performances.length > 0) {
+      const formatData = performances[0].dataItem.map((d) => {
+        return {
+          subject: performances[0]._kind[d.kind],
+          A: d.value
+        };
+      });
 
-  const performance = new Performance(filteredPerformance[0]);
-  const formatData = performance.dataItem.map((d) => {
-    return {
-      subject: performance._kind[d.kind],
-      A: d.value
-    };
-  });
+      setData([...data, formatData]);
+    }
+  }, []);
+
+  // const performance = new Performance(performances);
 
   const Container = styled.div`
     background: #282d30;
@@ -60,7 +56,7 @@ export default function RadarChartComponent({ performances, userId }) {
   return (
     // <ResponsiveContainer>
     <Container>
-      <RadarChart outerRadius={60} width={275} height={275} data={formatData}>
+      <RadarChart outerRadius={60} width={275} height={275} data={data[0]}>
         <PolarGrid radialLines={false} />
         <PolarAngleAxis dataKey="subject" />
         {/* <PolarRadiusAxis angle={30} domain={[0, 240]} /> */}

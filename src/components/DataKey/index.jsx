@@ -26,6 +26,9 @@ export default function DataKey(props) {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    @media (max-width: 1024px) {
+      flex-direction: row;
+    }
   `;
   const Container = styled.div`
     height: 125px;

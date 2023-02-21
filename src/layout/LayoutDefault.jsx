@@ -8,8 +8,15 @@
 
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
 import NavBar from '../components/Nav/NavBar';
 import SideBar from '../components/Nav/SideBar';
+
+const OutletContainer = styled.div`
+  width: 100%;
+  /* background-color: red; */
+  /* padding: 0 0 0 117px; */
+`;
 
 /**
  *The LayoutDefault component.
@@ -17,14 +24,14 @@ import SideBar from '../components/Nav/SideBar';
  */
 
 export default function LayoutDefault() {
-  const style = { height: '100%' };
+  // const style = { height: '100%' };
   return (
-    <div style={style}>
+    <div>
       <NavBar />
       <SideBar />
-
-      <Outlet />
-
+      <OutletContainer>
+        <Outlet />
+      </OutletContainer>
       {/* <main>{children}</main> */}
     </div>
   );

@@ -131,7 +131,7 @@ function renderLegend() {
 
 export default function LineChartComponent({ average, userId }) {
   // console.log('userId:', userId);
-  console.log('average:', average);
+  // console.log('average:', average);
 
   // Filter average data by user ID
   // const averageFilterById = filterUserAverage(average, userId);
