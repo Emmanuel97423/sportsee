@@ -65,12 +65,10 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
-  const mockData = true;
+  const mockData = false;
 
   useEffect(() => {
     if (!mockData) {
-      console.log('mockData:', mockData);
-
       HttpService.getPerformanceByUserId(id)
         .then((performance) => {
           const performanceDataByApi = performance.data.data;

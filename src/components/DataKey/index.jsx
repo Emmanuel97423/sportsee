@@ -28,6 +28,8 @@ export default function DataKey(props) {
     align-items: center;
     @media (max-width: 1024px) {
       flex-direction: row;
+      gap: 10px;
+      margin: 20px 0 20px 0;
     }
   `;
   const Container = styled.div`

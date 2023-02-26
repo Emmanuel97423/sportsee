@@ -6,6 +6,13 @@
 import ActivitySession from './ActivitySession';
 
 export default class Activity {
+  /**
+   * Creates an instance of Activity.
+   * @constructor
+   
+   * @param {Array} data - The Activity data of the user.
+   */
+
   constructor(data) {
     this._sessions = data.sessions.map(
       (element) => new ActivitySession(element)

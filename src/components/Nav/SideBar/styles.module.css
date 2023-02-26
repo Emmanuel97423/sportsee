@@ -11,6 +11,11 @@
     justify-content: space-around;
     align-items: center;
 }
+ @media (max-width: 1024px) {
+   .container {
+  height: 110%;
+   }
+ }
 .iconsList{
     display: flex;
     flex-direction: column;

@@ -117,10 +117,13 @@ function CustomLegend() {
 export default function RadialChartComponent({ todayScore }) {
   // const DataTestClass = new Activity(todayScore);
   const Container = styled.div`
+    width: 258px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #fbfbfb;
+    border-radius: 5px;
+    padding: 20px;
   `;
   return (
     <Container>

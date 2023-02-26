@@ -44,11 +44,11 @@ export default function RadarChartComponent({ performances, userId }) {
   const Container = styled.div`
     background: #282d30;
     height: 263px;
-    /* width: 30%; */
-    /* display: flex;
+    width: 258px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    */
+
     border-radius: 5px;
     padding: 20px;
   `;

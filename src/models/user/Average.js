@@ -5,6 +5,12 @@
  */
 
 export default class Average {
+  /**
+   * Creates an instance of ActivitySession.
+   * @constructor
+   * @param {array} data - The data to initialize the Average instance with.
+ 
+   */
   constructor(data) {
     this._userId = data.userId;
     this._session = data;
