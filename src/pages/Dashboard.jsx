@@ -18,6 +18,9 @@ import Activity from '../models/activity/Activity';
 import Average from '../models/average/Average';
 import Performance from '../models/performances/Performance';
 
+process.env.MOCK_DATA;
+console.log('process.env.MOCK_DATA:', process.env.REACT_APP_MOCK_DATA);
+
 function filterUsers(userDataFiltered, id) {
   return userDataFiltered.filter((user) => user.id === id);
 }
@@ -43,6 +46,11 @@ function filterUserPerformances(userDataPerformances, id) {
   return userDataPerformances.filter(
     (performance) => performance.userId === id
   );
+}
+
+function filterById(data, id) {
+  console.log('data:', data);
+  return data.filter((item) => item.userId === id);
 }
 
 /**
@@ -72,7 +80,7 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
-  const mockData = false;
+  const mockData = process.env.REACT_APP_MOCK_DATA;
 
   useEffect(() => {
     if (!mockData) {
@@ -128,8 +136,16 @@ export default function Dashboard() {
         parseIntId
       );
       const performancesClasse = new Performance(performancesFilter[0]);
-
       setPerformancesState([...performancesState, performancesClasse]);
+
+      const activityFilterByUserId = filterById(
+        mockDataJson.usersActivity,
+        parseIntId
+      );
+      console.log('activityFilterByUserId:', activityFilterByUserId);
+
+      const activityClass = new Activity(activityFilterByUserId[0]);
+      setActivityState([...activityState, activityClass.sessions]);
       // Mock Data
       setData((prevState) => [...prevState, mockDataJson]);
       const filteredUser = filterUsers(mockDataJson.users, parseIntId);
@@ -183,6 +199,7 @@ export default function Dashboard() {
   `;
   const Main = styled.div`
     width: 80%;
+    padding: 0 20px 0 0;
     @media (max-width: 1024px) {
       width: 100%;
     }

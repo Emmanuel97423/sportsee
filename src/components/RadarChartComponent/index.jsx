@@ -26,8 +26,8 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* font-size: 12px;
-  font-weight: 700; */
+  font-size: 12px;
+  font-weight: 700;
   color: #fff;
   border-radius: 5px;
   padding: 20px;
@@ -65,12 +65,7 @@ export default function RadarChartComponent({ performances, userId }) {
       <ResponsiveContainer width="100%" height={263}>
         <RadarChart outerRadius={85} data={data[0]}>
           <PolarGrid radialLines={false} />
-          <PolarAngleAxis
-            dataKey="subject"
-            tickLine={false}
-            strokeWidth={0.5}
-            fontSize={12}
-          />
+          <PolarAngleAxis dataKey="subject" />
           <Radar name={userId} dataKey="A" fill="#FF0101" fillOpacity={0.7} />
         </RadarChart>
       </ResponsiveContainer>

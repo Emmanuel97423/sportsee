@@ -17,3 +17,8 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 - Clone it on your computer.
 - The `npm install` command will allow you to install the dependencies.
 - The `npm run start` command will allow you to run the frontend app.
+
+### 1.3 Switch mock data
+
+- For use the mock or API data create an .env file and put : REACT_APP_MOCK_DATA=true/false
+- Restart server

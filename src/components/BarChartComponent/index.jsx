@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-restricted-globals */
@@ -16,12 +18,14 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
+  ResponsiveContainer,
+  Cell
 } from 'recharts';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  padding: 20px;
+  width: 100%;
   border-radius: 5px;
 `;
 
@@ -166,47 +170,67 @@ BarChartComponent - main component for generating a bar chart
 */
 
 export default function BarChartComponent({ userActivity }) {
+  console.log('userActivity:', userActivity);
+  const kilogramValues = userActivity
+    .reduce((acc, val) => acc.concat(val), []) // Flattens the nested array
+    .map((obj) => obj.kilogram); // Extracts the "_kilogram" values into a new array
+
+  const maxKilogram = Math.max(...kilogramValues);
+  const minKilogram = Math.min(...kilogramValues);
+
   return (
     <Container>
       {userActivity.map((element, index) => {
         return (
           <Fragment key={index}>
-            <BarChart
-              width={835}
-              height={400}
-              data={element}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey={index} axisLine={false} tickLine={false} />
-              <YAxis orientation="right" axisLine={false} tickLine={false} />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend
-                content={renderCustomizedLegend}
-                verticalAlign="top"
-                align="right"
-              />
-              <Bar
-                dataKey="kilogram"
-                fill="#282D30"
-                minPointSize={5}
-                barSize={7}
-                radius={[15, 15, 0, 0]}
-              />
+            <ResponsiveContainer width="95%" height={400}>
+              <BarChart
+                width={835}
+                height={320}
+                data={element}
+                margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
+              >
+                <CartesianGrid strokeDasharray="4 1" vertical={false} />
+                <XAxis
+                  // dataKey="day"
+                  domain={[1, 7]}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  dataKey="kilogram"
+                  domain={[minKilogram, maxKilogram]}
+                  orientation="right"
+                  axisLine={false}
+                  tickLine={false}
+                  interval={0}
+                />
 
-              <Bar
-                dataKey="calories"
-                fill="#E60000"
-                barSize={7}
-                minPointSize={10}
-                radius={[15, 15, 0, 0]}
-              />
-            </BarChart>
+                <Tooltip content={<CustomTooltip />} />
+                <Legend
+                  content={renderCustomizedLegend}
+                  verticalAlign="top"
+                  align="right"
+                />
+                <Bar
+                  dataKey="kilogram"
+                  fill="#282D30"
+                  minPointSize={130}
+                  barSize={7}
+                  radius={[15, 15, 0, 0]}
+                />
+
+                <Bar
+                  dataKey="kilogram"
+                  fill="#E60000"
+                  barSize={7}
+                  minPointSize={230}
+                  radius={[15, 15, 0, 0]}
+                >
+                  <Cell cursor="pointer" fill="#E60000" key={`cell-${index}`} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </Fragment>
         );
       })}
