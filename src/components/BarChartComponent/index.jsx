@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/require-default-props */
@@ -26,6 +27,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   width: 100%;
+  height: auto;
   border-radius: 5px;
 `;
 
@@ -161,6 +163,26 @@ function CustomTooltip({ active, payload, label }) {
   return null;
 }
 
+function CustomizedYAxisTick({ x, y, payload }) {
+  return (
+    <g transform={`translate(${x + 70},${y})`}>
+      <text x={0} y={0} dy={16} textAnchor="end" fill="#666">
+        {payload.value}
+      </text>
+    </g>
+  );
+}
+
+function CustomizedXAxisTick({ x, y, payload }) {
+  return (
+    <g transform={`translate(${x},${y + 20})`}>
+      <text x={0} y={0} dy={16} textAnchor="end" fill="#666">
+        {payload.value + 1}
+      </text>
+    </g>
+  );
+}
+
 /**
 
 BarChartComponent - main component for generating a bar chart
@@ -170,7 +192,6 @@ BarChartComponent - main component for generating a bar chart
 */
 
 export default function BarChartComponent({ userActivity }) {
-  console.log('userActivity:', userActivity);
   const kilogramValues = userActivity
     .reduce((acc, val) => acc.concat(val), []) // Flattens the nested array
     .map((obj) => obj.kilogram); // Extracts the "_kilogram" values into a new array
@@ -183,27 +204,33 @@ export default function BarChartComponent({ userActivity }) {
       {userActivity.map((element, index) => {
         return (
           <Fragment key={index}>
-            <ResponsiveContainer width="95%" height={400}>
+            <ResponsiveContainer width="100%" height={400}>
               <BarChart
-                width={835}
-                height={320}
                 data={element}
-                margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
+                margin={{ top: 20, right: 50, left: 20, bottom: 20 }}
               >
-                <CartesianGrid strokeDasharray="4 1" vertical={false} />
+                <CartesianGrid
+                  allowDataOverflow
+                  strokeDasharray="4 1"
+                  vertical={false}
+                />
                 <XAxis
+                  allowDataOverflow
                   // dataKey="day"
-                  domain={[1, 7]}
                   axisLine={false}
                   tickLine={false}
+                  tick={<CustomizedXAxisTick />}
+                  // domain={[0, 7]}
+                  scale="point"
+                  padding={{ right: 12, left: 12, bottom: 0 }}
                 />
                 <YAxis
-                  dataKey="kilogram"
-                  domain={[minKilogram, maxKilogram]}
+                  dataKey="calories"
                   orientation="right"
                   axisLine={false}
                   tickLine={false}
-                  interval={0}
+                  interval={1}
+                  tick={<CustomizedYAxisTick />}
                 />
 
                 <Tooltip content={<CustomTooltip />} />
@@ -215,16 +242,14 @@ export default function BarChartComponent({ userActivity }) {
                 <Bar
                   dataKey="kilogram"
                   fill="#282D30"
-                  minPointSize={130}
                   barSize={7}
                   radius={[15, 15, 0, 0]}
                 />
 
                 <Bar
-                  dataKey="kilogram"
+                  dataKey="calories"
                   fill="#E60000"
                   barSize={7}
-                  minPointSize={230}
                   radius={[15, 15, 0, 0]}
                 >
                   <Cell cursor="pointer" fill="#E60000" key={`cell-${index}`} />
