@@ -196,6 +196,7 @@ export default function BarChartComponent({ userActivity }) {
                   domain={[1, 7]}
                   axisLine={false}
                   tickLine={false}
+                  interval={1}
                 />
                 <YAxis
                   dataKey="kilogram"

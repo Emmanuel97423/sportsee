@@ -18,9 +18,6 @@ import Activity from '../models/activity/Activity';
 import Average from '../models/average/Average';
 import Performance from '../models/performances/Performance';
 
-process.env.MOCK_DATA;
-console.log('process.env.MOCK_DATA:', process.env.REACT_APP_MOCK_DATA);
-
 function filterUsers(userDataFiltered, id) {
   return userDataFiltered.filter((user) => user.id === id);
 }
@@ -49,7 +46,6 @@ function filterUserPerformances(userDataPerformances, id) {
 }
 
 function filterById(data, id) {
-  console.log('data:', data);
   return data.filter((item) => item.userId === id);
 }
 
@@ -117,6 +113,8 @@ export default function Dashboard() {
               HttpService.getAverageSessionsByUserId(id)
                 .then((averageSession) => {
                   const averageSessionByApi = averageSession.data.data;
+                  const AverageClasse = new Average(averageSessionByApi);
+                  setAverageState(AverageClasse.sessions);
                   setAverageState(averageSessionByApi.sessions);
                 })
                 .catch((error) => {
@@ -142,7 +140,6 @@ export default function Dashboard() {
         mockDataJson.usersActivity,
         parseIntId
       );
-      console.log('activityFilterByUserId:', activityFilterByUserId);
 
       const activityClass = new Activity(activityFilterByUserId[0]);
       setActivityState([...activityState, activityClass.sessions]);
@@ -165,9 +162,8 @@ export default function Dashboard() {
         parseIntId
       );
 
-      // const AverageClasse = new Average(filteredAverage[0].sessions);
-      // console.log('AverageClasse:', AverageClasse);
-      setAverageState(filteredAverage[0].sessions);
+      const AverageClasse = new Average(filteredAverage[0]);
+      setAverageState(AverageClasse.sessions);
     }
   }, []);
 
