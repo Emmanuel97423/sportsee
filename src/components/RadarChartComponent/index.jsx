@@ -12,20 +12,41 @@ import {
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
-  // PolarRadiusAxis,
   Radar,
-  ResponsiveContainer
+  ResponsiveContainer,
+  LabelList
 } from 'recharts';
 
+// Styled-component for container
+
+const Container = styled.div`
+  background: #282d30;
+  height: 265px;
+  width: 265px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font-size: 12px;
+  font-weight: 700; */
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+`;
+
 /**
- * A component that renders a radar chart of a user's performances.
+ *  * RadarChartComponent
+ *
+ * Renders a radar chart showing a user's performances.
+ *
+ * @component
  * @param {Object} props - The component's props.
  * @param {Array} props.performances - Array of performances data.
  * @param {string|number} props.userId - The user ID of the user whose performances to display.
  */
+
+function CustomTick() {}
 export default function RadarChartComponent({ performances, userId }) {
   const [data, setData] = useState([]);
-  // const filteredPerformance = filterUserPerformances(performances, userId);
   useEffect(() => {
     if (performances.length > 0) {
       const formatData = performances[0].dataItem.map((d) => {
@@ -39,31 +60,21 @@ export default function RadarChartComponent({ performances, userId }) {
     }
   }, []);
 
-  // const performance = new Performance(performances);
-
-  const Container = styled.div`
-    background: #282d30;
-    height: 263px;
-    width: 258px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border-radius: 5px;
-    padding: 20px;
-  `;
-
   return (
-    // <ResponsiveContainer>
     <Container>
-      <RadarChart outerRadius={60} width={275} height={275} data={data[0]}>
-        <PolarGrid radialLines={false} />
-        <PolarAngleAxis dataKey="subject" />
-        {/* <PolarRadiusAxis angle={30} domain={[0, 240]} /> */}
-        <Radar name={userId} dataKey="A" fill="#FF0101" fillOpacity={0.7} />
-      </RadarChart>
+      <ResponsiveContainer width="100%" height={263}>
+        <RadarChart outerRadius={85} data={data[0]}>
+          <PolarGrid radialLines={false} />
+          <PolarAngleAxis
+            dataKey="subject"
+            tickLine={false}
+            strokeWidth={0.5}
+            fontSize={12}
+          />
+          <Radar name={userId} dataKey="A" fill="#FF0101" fillOpacity={0.7} />
+        </RadarChart>
+      </ResponsiveContainer>
     </Container>
-    // </ResponsiveContainer>
   );
 }
 

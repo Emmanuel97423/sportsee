@@ -24,6 +24,7 @@ function filterUsers(userDataFiltered, id) {
 
 /**
  * Filter the user's average data for mock
+ * @funtion
  * @param {Array} userDataAverage - array of average data
  * @param {string} id - user id
  */
@@ -33,6 +34,7 @@ function filterUserAverage(userDataAverage, id) {
 
 /**
  * Filters user performances by a given user ID.
+ * @function
  * @param {Array} userDataPerformances - Array of user performances.
  * @param {string|number} id - The user ID to filter by.
  * @returns {Array} - Array of filtered user performances.
@@ -43,21 +45,26 @@ function filterUserPerformances(userDataPerformances, id) {
   );
 }
 
+/**
+ * Render dashboard page.
+ * @component
+ *
+ * @returns {JSX.element} - Page with user data.
+ */
+
 export default function Dashboard() {
   const { id } = useParams();
   let [searchParams, setSearchParams] = useSearchParams();
-  let [query, setQuery] = React.useState(searchParams.get('mockData'));
+  // let [query, setQuery] = React.useState(searchParams.get('mockData'));
   const parseIntId = parseInt(id, 10);
 
   const [averageState, setAverageState] = useState([]);
   const [activityState, setActivityState] = useState([]);
   const [performancesState, setPerformancesState] = useState([]);
-  // const [data, setData] = useState(mockDataJson);
   const [data, setData] = useState([]);
   const [firstNameState, setFirstNameState] = useState('FirstName');
   const [todayScoreState, setTodayScore] = useState([]);
 
-  // const [todayScoreState, setTodayScore] = useState([]);
   const [dataKey, setDataKey] = useState({
     calorieCount: 0,
     proteinCount: 0,
@@ -73,21 +80,15 @@ export default function Dashboard() {
         .then((performance) => {
           const performanceDataByApi = performance.data.data;
           const performancesClasse = new Performance(performanceDataByApi);
-          // radarChartData.push(performancesClasse);
           setPerformancesState([...performancesState, performancesClasse]);
         })
         .catch((error) => {
           console.log('error:', error);
         });
 
-      // Récupère un élément par ID
       HttpService.getUserById(id)
         .then((response) => {
-          // Traite la réponse de la requête
-
-          // console.log(response.data.data);
           const dataFetched = response.data.data;
-          // console.log('dataFetched:', dataFetched);
           setData([...data, dataFetched]);
           const { firstName } = dataFetched.userInfos;
 
@@ -119,11 +120,9 @@ export default function Dashboard() {
             });
         })
         .catch((error) => {
-          // Traite les erreurs de la requête
           console.error(error);
         });
     } else {
-      // console.log('mockData:', mockData);
       const performancesFilter = filterUserPerformances(
         mockDataJson.performances,
         parseIntId
@@ -132,9 +131,7 @@ export default function Dashboard() {
 
       setPerformancesState([...performancesState, performancesClasse]);
       // Mock Data
-      // setData([...data, mockDataJson]);
       setData((prevState) => [...prevState, mockDataJson]);
-      // const userData = data.users;
       const filteredUser = filterUsers(mockDataJson.users, parseIntId);
       const { firstName } = filteredUser[0].userInfos;
       const { keyData } = filteredUser[0];
@@ -152,18 +149,13 @@ export default function Dashboard() {
         parseIntId
       );
 
+      // const AverageClasse = new Average(filteredAverage[0].sessions);
+      // console.log('AverageClasse:', AverageClasse);
       setAverageState(filteredAverage[0].sessions);
     }
   }, []);
 
-  // console.log('data:', data);
-
-  // const activitySelectedByUserId = activityState.filter(
-  //   (activity) => activity.userId === parseIntId
-  // );
-
   const Div = styled.div`
-    /* max-width: 1200px; */
     padding: 15px 15px 0 130px;
   `;
 
@@ -197,14 +189,12 @@ export default function Dashboard() {
   `;
   const Box = styled.div`
     height: auto;
-    /* width: 97%; */
     display: flex;
     justify-content: space-between;
   `;
 
   const BoxLine = styled.div`
     height: auto;
-    /* width: 97%; */
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
@@ -212,9 +202,7 @@ export default function Dashboard() {
     padding: 20px 0 20px 0;
   `;
 
-  const SideBox = styled.div`
-    /* width: 20%; */
-  `;
+  const SideBox = styled.div``;
 
   return (
     <Div>
@@ -231,12 +219,11 @@ export default function Dashboard() {
           </BoxLine>
           <Box>
             <LineChartComponent average={averageState} userId={parseIntId} />
-
-            <RadialChartComponent todayScore={todayScoreState} />
             <RadarChartComponent
               performances={performancesState}
               userId={parseIntId}
             />
+            <RadialChartComponent todayScore={todayScoreState} />
           </Box>
         </Main>
 

@@ -8,6 +8,7 @@
 export default class DayConverter {
   /**
    * An object with keys as the number of the day and values as the short form of the day.
+   *
    * @type {object}
    * @private
    */

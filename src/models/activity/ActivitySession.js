@@ -13,7 +13,6 @@ export default class ActivitySession {
    */
 
   constructor(data) {
-    // console.log('dataActivitySession:', data);
     this._day = data.day;
     this._kilogram = data.kilogram;
     this._calories = data.calories;

@@ -14,8 +14,6 @@ import SideBar from '../components/Nav/SideBar';
 
 const OutletContainer = styled.div`
   width: 100%;
-  /* background-color: red; */
-  /* padding: 0 0 0 117px; */
 `;
 
 /**
@@ -24,7 +22,6 @@ const OutletContainer = styled.div`
  */
 
 export default function LayoutDefault() {
-  // const style = { height: '100%' };
   return (
     <div>
       <NavBar />
@@ -32,7 +29,6 @@ export default function LayoutDefault() {
       <OutletContainer>
         <Outlet />
       </OutletContainer>
-      {/* <main>{children}</main> */}
     </div>
   );
 }

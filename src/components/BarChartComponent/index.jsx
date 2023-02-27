@@ -7,16 +7,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable array-callback-return */
 
-/**
- * BarChartComponent
- *
- * Renders a bar chart showing the weight and calories burned by the user in each session.
- *
- * @component
- * @param {Array} userActivity - The array of user activity objects.
- * @returns {JSX} The BarChart component.
- */
-
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -26,8 +16,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
-  ResponsiveContainer
+  Legend
 } from 'recharts';
 import styled from 'styled-components';
 
@@ -177,18 +166,9 @@ BarChartComponent - main component for generating a bar chart
 */
 
 export default function BarChartComponent({ userActivity }) {
-  console.log('userActivity:', userActivity);
   return (
     <Container>
       {userActivity.map((element, index) => {
-        console.log('element:', element);
-        // const indexArray = [];
-        // element.map((item, indexEl) => {
-        //   indexArray.push(indexEl + 1);
-        // });
-
-        // console.log('indexArray:', indexArray);
-
         return (
           <Fragment key={index}>
             <BarChart

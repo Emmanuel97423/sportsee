@@ -9,8 +9,8 @@ export default class Activity {
   /**
    * Creates an instance of Activity.
    * @constructor
-   
-   * @param {Array} data - The Activity data of the user.
+   * @param {object} data - The data to initialize the Activity instance with.
+   * @param {Array} data.sessions - The sessions data of the user.
    */
 
   constructor(data) {

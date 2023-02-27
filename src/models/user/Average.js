@@ -1,19 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 
 /**
- * class UserData - User data modeling
+ * class Average - Average data modeling
  */
 
 export default class Average {
   /**
-   * Creates an instance of ActivitySession.
+   * Creates an instance of Average.
    * @constructor
    * @param {array} data - The data to initialize the Average instance with.
- 
+   * @param {string|number} data - The ID to initialize the Average instance with.
    */
   constructor(data) {
+    console.log('data:', data);
     this._userId = data.userId;
-    this._session = data;
+    this._session = data.sessions;
   }
 
   /**

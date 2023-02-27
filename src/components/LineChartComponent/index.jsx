@@ -11,29 +11,19 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import propTypes from 'prop-types';
-import {
-  LineChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Line,
-  Dot,
-  Area,
-  ResponsiveContainer,
-  AreaChart
-} from 'recharts';
-// import Average from '../../models/average/Average';
+import { LineChart, XAxis, Tooltip, Legend, Line, Dot } from 'recharts';
 
 // Styled-component for container
+
 const Container = styled.div`
-  /* width: 30%; */
   background-color: red;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
+// Styled-component for Tooltip
 
 const TooltopDiv = styled.div`
   background-color: #fff;
@@ -47,6 +37,8 @@ const TooltopDiv = styled.div`
   justify-content: center;
 `;
 
+// Styled-component for Legend
+
 const LegendCustom = styled.div`
   width: 100%;
   color: #fff;
@@ -54,6 +46,8 @@ const LegendCustom = styled.div`
 const LegendText = styled.p`
   opacity: 0.6;
 `;
+
+// Styled-component for the chart gradient
 
 const GradientChart = styled.div.attrs(() => ({ tabIndex: 0 }))`
   position: absolute;
@@ -66,16 +60,8 @@ const GradientChart = styled.div.attrs(() => ({ tabIndex: 0 }))`
 `;
 
 /**
- * Filter the user's average data
- * @param {Array} userDataAverage - array of average data
- * @param {string} id - user id
- */
-// function filterUserAverage(userDataAverage, id) {
-//   return userDataAverage.filter((average) => average.userId === id);
-// }
-
-/**
  * Custom tooltip component
+ * @function
  * @param {Object} props - active, payload
  */
 
@@ -93,6 +79,7 @@ function CustomTooltip({ active, payload }) {
 
 /**
  * Customized dot component
+ * @function
  */
 function CustomizedDot({ cx, cy }) {
   return (
@@ -110,6 +97,7 @@ function CustomizedDot({ cx, cy }) {
 
 /**
  * Customized Legend component
+ * @function
  * @returns {JSX.Element} - a customized legend component
  */
 
@@ -122,7 +110,8 @@ function renderLegend() {
 }
 
 /**
- * @function
+ *
+ * @component
  * @param {object} props
  * @param {array} props.average - Array of average data
  * @param {string} props.userId - ID of user
@@ -130,13 +119,6 @@ function renderLegend() {
  */
 
 export default function LineChartComponent({ average, userId }) {
-  // console.log('userId:', userId);
-  // console.log('average:', average);
-
-  // Filter average data by user ID
-  // const averageFilterById = filterUserAverage(average, userId);
-  // Create an instance of Average class
-  // const averageClasse = new Average(averageFilterById[0]);
   const chartRef = useRef(null);
 
   // Function to format X-axis tick labels
@@ -160,9 +142,6 @@ export default function LineChartComponent({ average, userId }) {
       'style',
       `background: linear-gradient(90deg, transparent,transparent,transparent, transparent  0 ${pourcent}%,  #000,#000,#000,#000 ${reste}% 100%)`
     );
-    // gradientLine.setAttribute('style', 'height:100px');
-
-    // console.log('pourcent:', pourcent);
   }
 
   return (

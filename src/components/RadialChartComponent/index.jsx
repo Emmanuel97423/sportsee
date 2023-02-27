@@ -7,15 +7,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  RadialBarChart,
-  RadialBar,
-  PolarAngleAxis,
-  Legend,
-  Text
-} from 'recharts';
+import { RadialBarChart, RadialBar, PolarAngleAxis, Legend } from 'recharts';
 
-import Activity from '../../models/activity/Activity';
+/**
+ * A styled component for the container radial chart
+ */
+
+const Container = styled.div`
+  width: 258px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fbfbfb;
+  border-radius: 5px;
+  padding: 20px;
+`;
 
 /**
  * A styled component for the value content inside the chart
@@ -63,8 +69,21 @@ const Span = styled.span`
 `;
 
 /**
+ * A styled component for the Legend Chart component
+ */
+
+const LegendStyle = styled.div`
+  position: absolute;
+  padding: 5px 0 0 30px;
+  font-weight: bold;
+  font-size: 15px;
+  color: #20253a; ;
+`;
+
+/**
  * A custom label component for the chart
  *
+ * @function
  * @param {Object} param0 An object containing the value
  * @returns {JSX} Returns a React element
  */
@@ -87,16 +106,10 @@ function customLabel({ value }) {
 /**
  * A custom Legend component for the chart
  *
+ * @function
  * @param {Object}  containing the Legend
  * @returns {JSX} Returns a React element
  */
-const LegendStyle = styled.div`
-  position: absolute;
-  padding: 5px 0 0 30px;
-  font-weight: bold;
-  font-size: 15px;
-  color: #20253a; ;
-`;
 
 function CustomLegend() {
   return (
@@ -107,24 +120,15 @@ function CustomLegend() {
 }
 
 /**
- * A radial chart component
+ * A Renders a radial chart component showing a user's score.
  *
+ *@component
  * @param {Object} props Props passed to the component
  * @param {Array} props.data An array of data for the chart
  * @returns {JSX} Returns a React element
  */
 
 export default function RadialChartComponent({ todayScore }) {
-  // const DataTestClass = new Activity(todayScore);
-  const Container = styled.div`
-    width: 258px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fbfbfb;
-    border-radius: 5px;
-    padding: 20px;
-  `;
   return (
     <Container>
       <RadialBarChart
