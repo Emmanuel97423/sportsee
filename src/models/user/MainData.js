@@ -6,7 +6,18 @@
 
 export default class UserData {
   /**
+   * @constructor
    * @param {Array} data - The data value.
+   * @param {string|number} data.id -  The id of user
+   * @param {string} data.userInfos.firstName -  The firstName of user
+   * @param {string} data.userInfos.lastName -  The lastName of user
+   * @param {number} data.userInfos.age -  The age of user
+   * @param {number} data.userInfos.todayScore -  The todayScore of user
+   * @param {number} data.userInfos.calorieCount -  The calorieCount of user
+   * @param {number} data.userInfos.proteinCount -  The proteinCount of user
+   * @param {number} data.userInfos.carbohydrateCount -  The carbohydrateCount of user
+   * @param {number} data.userInfos.lipidCount -  The lipidCount of user
+   *
    */
 
   constructor(data) {
@@ -14,7 +25,7 @@ export default class UserData {
     this._firstName = data.userInfos.firstName;
     this._lastName = data.userInfos.lastName;
     this._age = data.userInfos.age;
-    this._todayScore = data.userInfos.todayScore;
+    this._todayScore = data.todayScore;
     this._calorieCount = data.keyData.calorieCount;
     this._proteinCount = data.keyData.proteinCount;
     this._carbohydrateCount = data.keyData.carbohydrateCount;

@@ -9,7 +9,7 @@ export default class Average {
    * Creates an instance of Average.
    * @constructor
    * @param {array} data - The data to initialize the Average instance with.
-   * @param {string|number} data - The ID to initialize the Average instance with.
+   * @param {string|number} data.userId - The ID to initialize the Average instance with.
    */
   constructor(data) {
     console.log('data:', data);

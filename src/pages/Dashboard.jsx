@@ -14,6 +14,7 @@ import DataKey from '../components/DataKey';
 import mockDataJson from '../__mock__/data.json';
 import HttpService from '../service/httpService';
 
+import UserData from '../models/user/MainData';
 import Activity from '../models/activity/Activity';
 import Average from '../models/average/Average';
 import Performance from '../models/performances/Performance';
@@ -76,10 +77,14 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
-  const mockData = process.env.REACT_APP_MOCK_DATA;
+  // const mockData = process.env.REACT_APP_MOCK_DATA;
+  const mockData = false;
+  console.log('mockData:', mockData);
 
   useEffect(() => {
     if (!mockData) {
+      console.log('mockData:', mockData);
+
       HttpService.getPerformanceByUserId(id)
         .then((performance) => {
           const performanceDataByApi = performance.data.data;
@@ -93,17 +98,18 @@ export default function Dashboard() {
       HttpService.getUserById(id)
         .then((response) => {
           const dataFetched = response.data.data;
-          setData([...data, dataFetched]);
-          const { firstName } = dataFetched.userInfos;
+          const userDataClass = new UserData(dataFetched);
+          setData([...data, userDataClass]);
+          const { firstName } = userDataClass;
 
           setFirstNameState(firstName);
-          setTodayScore([...todayScoreState, dataFetched]);
+          setTodayScore([...todayScoreState, userDataClass]);
           setDataKey({
             ...dataKey,
-            calorieCount: dataFetched.keyData.calorieCount,
-            carbohydrateCount: dataFetched.keyData.carbohydrateCount,
-            lipidCount: dataFetched.keyData.lipidCount,
-            proteinCount: dataFetched.keyData.proteinCount
+            calorieCount: userDataClass.calorieCount,
+            carbohydrateCount: userDataClass.carbohydrateCount,
+            lipidCount: userDataClass.lipidCount,
+            proteinCount: userDataClass.proteinCount
           });
           HttpService.getActivityByUserId(id)
             .then((activity) => {
@@ -129,6 +135,24 @@ export default function Dashboard() {
           console.error(error);
         });
     } else {
+      // Mock Data
+      setData((prevState) => [...prevState, mockDataJson]);
+      const filteredUser = filterUsers(mockDataJson.users, parseIntId);
+      const userDataClass = new UserData(filteredUser[0]);
+      const { firstName } = userDataClass;
+      setTodayScore([...todayScoreState, filteredUser[0]]);
+      setDataKey({
+        ...dataKey,
+        calorieCount: userDataClass.calorieCount,
+        carbohydrateCount: userDataClass.carbohydrateCount,
+        lipidCount: userDataClass.lipidCount,
+        proteinCount: userDataClass.proteinCount
+      });
+      setFirstNameState(firstName);
+      const filteredAverage = filterUserAverage(
+        mockDataJson.average,
+        parseIntId
+      );
       const performancesFilter = filterUserPerformances(
         mockDataJson.performances,
         parseIntId
@@ -143,24 +167,6 @@ export default function Dashboard() {
 
       const activityClass = new Activity(activityFilterByUserId[0]);
       setActivityState([...activityState, activityClass.sessions]);
-      // Mock Data
-      setData((prevState) => [...prevState, mockDataJson]);
-      const filteredUser = filterUsers(mockDataJson.users, parseIntId);
-      const { firstName } = filteredUser[0].userInfos;
-      const { keyData } = filteredUser[0];
-      setTodayScore([...todayScoreState, filteredUser[0]]);
-      setDataKey({
-        ...dataKey,
-        calorieCount: keyData.calorieCount,
-        carbohydrateCount: keyData.carbohydrateCount,
-        lipidCount: keyData.lipidCount,
-        proteinCount: keyData.proteinCount
-      });
-      setFirstNameState(firstName);
-      const filteredAverage = filterUserAverage(
-        mockDataJson.average,
-        parseIntId
-      );
 
       const AverageClasse = new Average(filteredAverage[0]);
       setAverageState(AverageClasse.sessions);
