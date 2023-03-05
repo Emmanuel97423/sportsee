@@ -63,6 +63,7 @@ export default function Dashboard() {
   // let [query, setQuery] = React.useState(searchParams.get('mockData'));
   const parseIntId = parseInt(id, 10);
 
+  const [apiResponse, setApiResponse] = useState(false);
   const [averageState, setAverageState] = useState([]);
   const [activityState, setActivityState] = useState([]);
   const [performancesState, setPerformancesState] = useState([]);
@@ -83,20 +84,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!mockData) {
-      console.log('mockData:', mockData);
-
-      HttpService.getPerformanceByUserId(id)
-        .then((performance) => {
-          const performanceDataByApi = performance.data.data;
-          const performancesClasse = new Performance(performanceDataByApi);
-          setPerformancesState([...performancesState, performancesClasse]);
-        })
-        .catch((error) => {
-          console.log('error:', error);
-        });
-
       HttpService.getUserById(id)
         .then((response) => {
+          setApiResponse(true);
           const dataFetched = response.data.data;
           const userDataClass = new UserData(dataFetched);
           setData([...data, userDataClass]);
@@ -122,6 +112,21 @@ export default function Dashboard() {
                   const AverageClasse = new Average(averageSessionByApi);
                   setAverageState(AverageClasse.sessions);
                   setAverageState(averageSessionByApi.sessions);
+
+                  HttpService.getPerformanceByUserId(id)
+                    .then((performance) => {
+                      const performanceDataByApi = performance.data.data;
+                      const performancesClasse = new Performance(
+                        performanceDataByApi
+                      );
+                      setPerformancesState([
+                        ...performancesState,
+                        performancesClasse
+                      ]);
+                    })
+                    .catch((error) => {
+                      console.log('error:', error);
+                    });
                 })
                 .catch((error) => {
                   console.log('error:', error);
@@ -136,6 +141,7 @@ export default function Dashboard() {
         });
     } else {
       // Mock Data
+      setApiResponse(true);
       setData((prevState) => [...prevState, mockDataJson]);
       const filteredUser = filterUsers(mockDataJson.users, parseIntId);
       const userDataClass = new UserData(filteredUser[0]);
@@ -225,31 +231,43 @@ export default function Dashboard() {
 
   return (
     <Div>
-      <Title>
-        <h1 className="title">
-          Bonjour <span className="title__text--red">{firstNameState}</span>
-        </h1>
-        <p>Félicitation! Vous avez explosé vos objectifs hier 👏</p>
-      </Title>
-      <Container>
-        <Main>
-          <BoxLine>
-            <BarChartComponent userActivity={activityState} />
-          </BoxLine>
-          <Box>
-            <LineChartComponent average={averageState} userId={parseIntId} />
-            <RadarChartComponent
-              performances={performancesState}
-              userId={parseIntId}
-            />
-            <RadialChartComponent todayScore={todayScoreState} />
-          </Box>
-        </Main>
+      {apiResponse ? (
+        <div>
+          <Title>
+            <h1 className="title">
+              Bonjour <span className="title__text--red">{firstNameState}</span>
+            </h1>
+            <p>Félicitation! Vous avez explosé vos objectifs hier 👏</p>
+          </Title>
+          <Container>
+            <Main>
+              <BoxLine>
+                <BarChartComponent userActivity={activityState} />
+              </BoxLine>
+              <Box>
+                <LineChartComponent
+                  average={averageState}
+                  userId={parseIntId}
+                />
+                <RadarChartComponent
+                  performances={performancesState}
+                  userId={parseIntId}
+                />
+                <RadialChartComponent todayScore={todayScoreState} />
+              </Box>
+            </Main>
 
-        <SideBox>
-          <DataKey dataKey={dataKey} />
-        </SideBox>
-      </Container>
+            <SideBox>
+              <DataKey dataKey={dataKey} />
+            </SideBox>
+          </Container>
+        </div>
+      ) : (
+        <div>
+          🚨 Oupss il semble que l&apos;API rencontre des problèmes, veuillez
+          réessayer plus tard...
+        </div>
+      )}
     </Div>
   );
 }
