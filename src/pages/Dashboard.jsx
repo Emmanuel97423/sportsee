@@ -78,9 +78,8 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
-  // const mockData = process.env.REACT_APP_MOCK_DATA;
-  const mockData = false;
-  console.log('mockData:', mockData);
+  const mockData = process.env.REACT_APP_MOCK_DATA || false;
+  // const mockData = false;
 
   useEffect(() => {
     if (!mockData) {
