@@ -22,3 +22,7 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 
 - For use the mock or API data create an .env file and put : REACT_APP_MOCK_DATA=true/false
 - Restart server
+
+### 1.4 Switch user id
+
+- For switch user navigate to : `http://localhost:3000/dashboard/12` or `http://localhost:3000/dashboard/18`
