@@ -78,13 +78,12 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
-  const mockData = true;
+  const mockData = false;
 
   useEffect(() => {
     if (!mockData) {
       HttpService.getUserById(id)
         .then((response) => {
-          console.log('response:', response);
           setApiResponse(true);
           const dataFetched = response.data.data;
           const userDataClass = new UserData(dataFetched);

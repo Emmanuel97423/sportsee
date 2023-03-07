@@ -63,7 +63,7 @@ export default function RadarChartComponent({ performances, userId }) {
   return (
     <Container>
       <ResponsiveContainer width="100%" height={263}>
-        <RadarChart outerRadius={85} data={data[0]}>
+        <RadarChart outerRadius={70} data={data[0]}>
           <PolarGrid radialLines={false} />
           <PolarAngleAxis dataKey="subject" />
           <Radar name={userId} dataKey="A" fill="#FF0101" fillOpacity={0.7} />
