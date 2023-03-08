@@ -52,12 +52,6 @@ class HttpService {
       return userDataPromiseMock;
     }
     return this.instance.get(`/user/${this._userId}`);
-    // const userDataPromiseApi = new Promise((resolve, reject) => {
-    //   const fetchApi = this.instance.get(`/user/${this._userId}`);
-    //   resolve(fetchApi);
-    //   reject(new Error('something bad happened'));
-    // });
-    // return userDataPromiseApi;
   }
 
   getActivityByUserId() {
@@ -79,13 +73,6 @@ class HttpService {
       return activityDataPromiseMock;
     }
     return this.instance.get(`/user/${this._userId}/activity`);
-    // const userDataPromiseApi = new Promise((resolve, reject) => {
-    //   const fetchApi = this.instance.get(`/user/${this._userId}`);
-    //   resolve(fetchApi);
-    //   reject(new Error('something bad happened'));
-    // });
-    // return userDataPromiseApi;
-    // return this.instance.get(`/user/${userId}/activity`);
   }
 
   getAverageSessionsByUserId() {
@@ -107,7 +94,6 @@ class HttpService {
       return averageSessionsDataPromiseMock;
     }
     return this.instance.get(`/user/${this._userId}/average-sessions`);
-    // return this.instance.get(`/user/${userId}/average-sessions`);
   }
 
   getPerformanceByUserId() {

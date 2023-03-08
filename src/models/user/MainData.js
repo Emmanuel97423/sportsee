@@ -25,7 +25,7 @@ export default class UserData {
     this._firstName = data.userInfos.firstName;
     this._lastName = data.userInfos.lastName;
     this._age = data.userInfos.age;
-    this._todayScore = data.todayScore;
+    this._todayScore = data.todayScore ? data.todayScore : data.score;
     this._calorieCount = data.keyData.calorieCount;
     this._proteinCount = data.keyData.proteinCount;
     this._carbohydrateCount = data.keyData.carbohydrateCount;
