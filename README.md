@@ -20,7 +20,7 @@ If you are working with several versions of NodeJS, we recommend you install [nv
 
 ### 1.3 Switch mock data
 
-- For use the mock or API data, change the boolean "mockData" at : `src/pages/Dashboard line .81`
+- For use the mock or API data, change the boolean "mockData" at : `src/service/httpService.js line .9`
 
 ### 1.4 Switch user id
 
