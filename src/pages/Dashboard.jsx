@@ -62,8 +62,7 @@ function filterById(data, id) {
 
 export default function Dashboard() {
   const { id } = useParams();
-  let [searchParams, setSearchParams] = useSearchParams();
-  // let [query, setQuery] = React.useState(searchParams.get('mockData'));
+
   const parseIntId = parseInt(id, 10);
 
   const [apiResponse, setApiResponse] = useState(false);
