@@ -1,3 +1,6 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-else-return */
+/* eslint-disable no-unreachable */
 /* eslint-disable prefer-const */
 /* eslint-disable import/extensions */
 /* eslint-disable prefer-destructuring */
@@ -78,103 +81,59 @@ export default function Dashboard() {
     lipidCount: 0
   });
 
-  const mockData = false;
-
   useEffect(() => {
-    if (!mockData) {
-      HttpService.getUserById(id)
-        .then((response) => {
-          setApiResponse(true);
-          const dataFetched = response.data.data;
-          const userDataClass = new UserData(dataFetched);
-          setData([...data, userDataClass]);
-          const { firstName } = userDataClass;
-
-          setFirstNameState(firstName);
-          setTodayScore([...todayScoreState, userDataClass]);
-          setDataKey({
-            ...dataKey,
-            calorieCount: userDataClass.calorieCount,
-            carbohydrateCount: userDataClass.carbohydrateCount,
-            lipidCount: userDataClass.lipidCount,
-            proteinCount: userDataClass.proteinCount
-          });
-          HttpService.getActivityByUserId(id)
-            .then((activity) => {
-              const activityApiResponse = activity.data.data;
-              const activityClassModel = new Activity(activityApiResponse);
-              setActivityState([...activityState, activityClassModel.sessions]);
-              HttpService.getAverageSessionsByUserId(id)
-                .then((averageSession) => {
-                  const averageSessionByApi = averageSession.data.data;
-                  const AverageClasse = new Average(averageSessionByApi);
-                  setAverageState(AverageClasse.sessions);
-                  setAverageState(averageSessionByApi.sessions);
-
-                  HttpService.getPerformanceByUserId(id)
-                    .then((performance) => {
-                      const performanceDataByApi = performance.data.data;
-                      const performancesClasse = new Performance(
-                        performanceDataByApi
-                      );
-                      setPerformancesState([
-                        ...performancesState,
-                        performancesClasse
-                      ]);
-                    })
-                    .catch((error) => {
-                      console.log('error:', error);
-                    });
-                })
-                .catch((error) => {
-                  console.log('error:', error);
-                });
-            })
-            .catch((error) => {
-              console.log('error:', error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
+    const userDataServiceResponse = new HttpService(id);
+    userDataServiceResponse.userById
+      .then((user) => {
+        const userFetchApi = user.data.data;
+        setApiResponse(true);
+        const userDataClass = new UserData(userFetchApi);
+        setData([...data, userDataClass]);
+        const { firstName } = userDataClass;
+        setFirstNameState(firstName);
+        setTodayScore([...todayScoreState, userDataClass]);
+        setDataKey({
+          ...dataKey,
+          calorieCount: userDataClass.calorieCount,
+          carbohydrateCount: userDataClass.carbohydrateCount,
+          lipidCount: userDataClass.lipidCount,
+          proteinCount: userDataClass.proteinCount
         });
-    } else {
-      // Mock Data
-      setApiResponse(true);
-      setData((prevState) => [...prevState, mockDataJson]);
-      const filteredUser = filterUsers(mockDataJson.users, parseIntId);
-      const userDataClass = new UserData(filteredUser[0]);
-      const { firstName } = userDataClass;
-      setTodayScore([...todayScoreState, filteredUser[0]]);
-      setDataKey({
-        ...dataKey,
-        calorieCount: userDataClass.calorieCount,
-        carbohydrateCount: userDataClass.carbohydrateCount,
-        lipidCount: userDataClass.lipidCount,
-        proteinCount: userDataClass.proteinCount
+
+        userDataServiceResponse.activityByUserId
+          .then((activity) => {
+            const activityApiResponse = activity.data.data;
+            const activityClassModel = new Activity(activityApiResponse);
+            setActivityState([...activityState, activityClassModel.sessions]);
+
+            userDataServiceResponse.averageSessionsByUserId.then((sessions) => {
+              const averageSessionByApi = sessions.data.data;
+              const AverageClasse = new Average(averageSessionByApi);
+              setAverageState(AverageClasse.sessions);
+              setAverageState(averageSessionByApi.sessions);
+            });
+            userDataServiceResponse.perfomormancesByUserId
+              .then((perfomances) => {
+                const performanceDataByApi = perfomances.data.data;
+                const performancesClasse = new Performance(
+                  performanceDataByApi
+                );
+                setPerformancesState([
+                  ...performancesState,
+                  performancesClasse
+                ]);
+              })
+              .catch((err) => {
+                console.log('err:', err);
+              });
+          })
+          .catch((error) => {
+            console.log('error:', error);
+          });
+      })
+      .catch((error) => {
+        console.log('error:', error);
       });
-      setFirstNameState(firstName);
-      const filteredAverage = filterUserAverage(
-        mockDataJson.average,
-        parseIntId
-      );
-      const performancesFilter = filterUserPerformances(
-        mockDataJson.performances,
-        parseIntId
-      );
-      const performancesClasse = new Performance(performancesFilter[0]);
-      setPerformancesState([...performancesState, performancesClasse]);
-
-      const activityFilterByUserId = filterById(
-        mockDataJson.usersActivity,
-        parseIntId
-      );
-
-      const activityClass = new Activity(activityFilterByUserId[0]);
-      setActivityState([...activityState, activityClass.sessions]);
-
-      const AverageClasse = new Average(filteredAverage[0]);
-      setAverageState(AverageClasse.sessions);
-    }
   }, []);
 
   const Div = styled.div`
