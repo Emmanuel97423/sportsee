@@ -14,6 +14,7 @@ export default class Activity {
    */
 
   constructor(data) {
+    console.log('data:', data);
     this._sessions = data.sessions.map(
       (element) => new ActivitySession(element)
     );
